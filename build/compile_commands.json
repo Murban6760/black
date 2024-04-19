@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/workspaces/black/build",
+  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/BlackJack.cpp.o -c /workspaces/black/BlackJack.cpp",
+  "file": "/workspaces/black/BlackJack.cpp"
+},
+{
+  "directory": "/workspaces/black/build",
+  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/CardDeck.cpp.o -c /workspaces/black/CardDeck.cpp",
+  "file": "/workspaces/black/CardDeck.cpp"
+},
+{
+  "directory": "/workspaces/black/build",
+  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/Dealer.cpp.o -c /workspaces/black/Dealer.cpp",
+  "file": "/workspaces/black/Dealer.cpp"
+},
+{
+  "directory": "/workspaces/black/build",
+  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/Player.cpp.o -c /workspaces/black/Player.cpp",
+  "file": "/workspaces/black/Player.cpp"
+}
+]

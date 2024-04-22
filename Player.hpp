@@ -13,6 +13,8 @@ public:
 
     double placeBet(int handID);
 
+    int getHand(int handID, int index);
+
     void getCard(CardDeck &cardDeck);
     void getCard(int handID, CardDeck &cardDeck);
 
@@ -25,14 +27,12 @@ public:
     int getNumHands();
     int getValue(int handID);
     int getPlayFlag();
-    int getPlayerWins();
     double getPlayerWallet();
     double getBet();
     double getBet(int handID);
     double betDown(int handID);
 
     void setPlayFlag(int flagValue);
-    void setPlayerWins(int value);
 
     void insertHand(std::vector<int> &hand);
     void insertValue(int value);

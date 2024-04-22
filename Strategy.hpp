@@ -3,10 +3,11 @@
 
 #include "CardDeck.hpp"
 #include "Dealer.hpp"
+#include "Player.hpp"
 #include <vector>
 
 
-class Strategy {
+class Strategy{
     
     public:
 
@@ -14,7 +15,7 @@ class Strategy {
 
         void displayHand(CardDeck &cardDeck, int handID);
         double takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID);
-        void getCard(int handID, CardDeck &cardDeck);
+        void setHand(int handID, Player &player, CardDeck &cardDeck);
         int getValue(int handID);
         int getDealerValue(Dealer &dealer);
         int getChoice(CardDeck &cardDeck, Dealer &dealer, int handID);
@@ -24,13 +25,13 @@ class Strategy {
         void clearHand();
 
     private:
-        std::vector<std::vector<int>> hands;
+        std::vector<std::vector<int>> stratHands;
 
-        int value;
-        std::vector<int> values;
+        int stratValue;
+        std::vector<int> stratValues;
 
-        int playFlag;
-        int splitCount;
+        int stratFlag;
+        int stratCount;
         int strategyWins;
 
 };

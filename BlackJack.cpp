@@ -73,13 +73,13 @@ int main()
 
 		player.getCard(0, cardDeck);
 		dealer.getCard(cardDeck);
-		strategy.getCard(0, cardDeck);
+
 
 		cout << "----------------------------------------------------------" << endl << endl;
 
 		player.getCard(0, cardDeck);
 		dealer.getCard(cardDeck);
-		strategy.getCard(0, cardDeck);
+		
 
 		int playerFlag = 1;
 		int dealerFlag = 1;

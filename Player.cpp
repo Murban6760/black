@@ -220,3 +220,10 @@ void Player::betClear()
 {
     bets.clear();
 }
+
+int Player::getHand(int handID, int index)
+{
+    return hands[handID][index];
+}
+
+int Player::getNumCards(int handID)

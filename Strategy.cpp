@@ -2,9 +2,9 @@
 #include <iostream>
 
 Strategy::Strategy():
-    playFlag(1),
-    value(0),
-    splitCount(0),
+    stratFlag(1),
+    stratValue(0),
+    stratCount(0),
     strategyWins(0)
 {}
 
@@ -67,24 +67,20 @@ const double strategy[52][10]{
 
 void Strategy::setPlayFlag(int flagValue)
 {
-    playFlag = flagValue;
+    stratFlag = flagValue;
 }
 
 int Strategy::getPlayFlag()
 {
-    return playFlag;
+    return stratFlag;
 }
 
-void Strategy::getCard(int handID, CardDeck &cardDeck)
+void Strategy::setHand(int handID, Player &player, CardDeck &cardDeck)
 {
-    int card = cardDeck.getCard();
-	std::vector<int> x = hands[handID];
-    x.push_back(card);
-    value = cardDeck.computePlayerValue(x);
-    hands[handID] = x;
-    values[handID] = value;
-    cardDeck.displayHand("SP", hands, handID);
-    
+    for (int j = 0; j < player.g
+    stratValue = cardDeck.computePlayerValue(stratHands[handID]);
+    stratValues[handID] = stratValue;
+    cardDeck.displayHand("SP", stratHands, handID);
 }
 
 double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
@@ -109,7 +105,7 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
     case 2:
     {
 
-        cardDeck.displayHand("SP", hands, handID);
+        cardDeck.displayHand("SP", stratHands, handID);
         setPlayFlag(0);
 
         return 0;
@@ -117,26 +113,26 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
     }
     case 3:
     {
-        if (cardDeck.getCardName(hands[handID][0]) == cardDeck.getCardName(hands[handID][1]))
+        if (cardDeck.getCardName(stratHands[handID][0]) == cardDeck.getCardName(stratHands[handID][1]))
         {
-            splitCount += 1;
+            stratCount += 1;
             std::vector<int> hand2;
-            int x = hands[handID][1];
+            int x = stratHands[handID][1];
             int y = getValue(handID)/2;
             hand2.push_back(x);
-            hands[handID].erase(hands[handID].begin() + 1);
-            hands.push_back(hand2);
+            stratHands[handID].erase(stratHands[handID].begin() + 1);
+            stratHands.push_back(hand2);
             hand2.clear();
-            values[handID] = y;
-            values.push_back(y);
-            cardDeck.displayHand("SP", hands, 1);
+            stratValues[handID] = y;
+            stratValues.push_back(y);
+            cardDeck.displayHand("SP", stratHands, 1);
             return 0;
         }
         else
         {
             std::cout << "Error: No matching cards; Unable to split. " << std::endl;
             std::cout << std::endl;
-            cardDeck.displayHand("SP", hands, 0);
+            cardDeck.displayHand("SP", stratHands, 0);
             std::cout << std::endl;
             return 0;
         }
@@ -164,17 +160,17 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
 
 int Strategy::getValue(int handID)
 {
-    return values[handID];
+    return stratValues[handID];
 }
 
 int Strategy::getNumHands()
 {
-    return hands.size();
+    return stratHands.size();
 }
 
 void Strategy::displayHand(CardDeck &cardDeck, int handID)
 {
-    cardDeck.displayHand("SP", hands, handID);
+    cardDeck.displayHand("SP", stratHands, handID);
 }
 
 int Strategy::getDealerValue(Dealer &dealer)
@@ -184,15 +180,15 @@ int Strategy::getDealerValue(Dealer &dealer)
 
 int Strategy::getChoice(CardDeck &cardDeck, Dealer &dealer,int handID)
 {
-    if (hands.size() > 2)
+    if (stratHands.size() > 2)
     {
         int x = getValue(handID) + 29 + (getDealerValue(dealer)* 100);
         return x;
-    } else if (cardDeck.getCardName(hands[handID][0]) == "A" || cardDeck.getCardName(hands[handID][1]) == "A") 
+    } else if (cardDeck.getCardName(stratHands[handID][0]) == "A" || cardDeck.getCardName(stratHands[handID][1]) == "A") 
     {
         int x = getValue(handID) + 6 + (getDealerValue(dealer)* 100);
         return x;
-    } else if (cardDeck.getCardName(hands[handID][0]) == cardDeck.getCardName(hands[handID][1])) 
+    } else if (cardDeck.getCardName(stratHands[handID][0]) == cardDeck.getCardName(stratHands[handID][1])) 
     {
         int x = (getValue(handID)/2) + 28 + (getDealerValue(dealer)* 100);
         return x;
@@ -205,5 +201,6 @@ int Strategy::getChoice(CardDeck &cardDeck, Dealer &dealer,int handID)
 
 void Strategy::clearHand()
 {
-    hands.clear();
+    stratHands.clear();
 }
+

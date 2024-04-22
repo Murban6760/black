@@ -4,11 +4,7 @@
 
 Dealer::Dealer():
     value(0)
-{
-
-
-
-}
+{}
 
 void Dealer::getCard(CardDeck &cardDeck)
 {

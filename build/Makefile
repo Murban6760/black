@@ -628,6 +628,33 @@ Player.cpp.s:
 	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Player.cpp.s
 .PHONY : Player.cpp.s
 
+Strategy.o: Strategy.cpp.o
+
+.PHONY : Strategy.o
+
+# target to build an object file
+Strategy.cpp.o:
+	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Strategy.cpp.o
+.PHONY : Strategy.cpp.o
+
+Strategy.i: Strategy.cpp.i
+
+.PHONY : Strategy.i
+
+# target to preprocess a source file
+Strategy.cpp.i:
+	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Strategy.cpp.i
+.PHONY : Strategy.cpp.i
+
+Strategy.s: Strategy.cpp.s
+
+.PHONY : Strategy.s
+
+# target to generate assembly for a file
+Strategy.cpp.s:
+	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Strategy.cpp.s
+.PHONY : Strategy.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -680,6 +707,9 @@ help:
 	@echo "... Player.o"
 	@echo "... Player.i"
 	@echo "... Player.s"
+	@echo "... Strategy.o"
+	@echo "... Strategy.i"
+	@echo "... Strategy.s"
 .PHONY : help
 
 

@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/workspaces/black/CardDeck.cpp" "/workspaces/black/build/CMakeFiles/BlackJack.dir/CardDeck.cpp.o"
   "/workspaces/black/Dealer.cpp" "/workspaces/black/build/CMakeFiles/BlackJack.dir/Dealer.cpp.o"
   "/workspaces/black/Player.cpp" "/workspaces/black/build/CMakeFiles/BlackJack.dir/Player.cpp.o"
+  "/workspaces/black/Strategy.cpp" "/workspaces/black/build/CMakeFiles/BlackJack.dir/Strategy.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

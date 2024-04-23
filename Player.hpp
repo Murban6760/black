@@ -11,6 +11,8 @@ public:
 
     Player();
 
+
+    int getNumCards(int handID);
     double placeBet(int handID);
 
     int getHand(int handID, int index);
@@ -20,6 +22,7 @@ public:
 
     double takeTurn(CardDeck &cardDeck, int handID);
     void clearHand();
+    void clearValues();
 
     void displayHand(CardDeck &cardDeck);
     void displayHand(CardDeck &cardDeck, int handID);

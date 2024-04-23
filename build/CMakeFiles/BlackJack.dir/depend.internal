@@ -22,5 +22,6 @@ CMakeFiles/BlackJack.dir/Player.cpp.o
 CMakeFiles/BlackJack.dir/Strategy.cpp.o
  /workspaces/black/CardDeck.hpp
  /workspaces/black/Dealer.hpp
+ /workspaces/black/Player.hpp
  /workspaces/black/Strategy.cpp
  /workspaces/black/Strategy.hpp

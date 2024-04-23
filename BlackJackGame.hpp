@@ -76,7 +76,7 @@ int summarizeResults(Dealer &dealer, Player &player, int handID)
 				}
 				else if (player.getValue(handID) > dealer.getValue())
 				{
-					std::cout << "Players Wins, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
+					std::cout << "Player Wins, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
 					player.addToWallet(2*player.getBet(handID));
                     return 1;
 				}
@@ -137,7 +137,7 @@ int summarizeAgent (Dealer &dealer, Strategy &strategy, int handID)
 		}
 		else
 		{
-			std::cout << "Agent wins" << std::endl;
+			std::cout << "Agent wins, Agent value: " << strategy.getValue(handID) << std::endl;
 			return 1;
 		}
 	}
@@ -145,6 +145,7 @@ int summarizeAgent (Dealer &dealer, Strategy &strategy, int handID)
 	{
 		if (strategy.getValue(handID) > 21)
 		{
+			std::cout << "Agent loses, Agent value: " << strategy.getValue(handID) << std::endl;
 			return -1;
 		} 
 		else
@@ -155,10 +156,12 @@ int summarizeAgent (Dealer &dealer, Strategy &strategy, int handID)
 			}
 			else if (strategy.getValue(handID) > dealer.getValue())
 			{
+				std::cout << "Agent wins, Agent value: " << strategy.getValue(handID) << std::endl;
 				return 1;
 			}
 			else
 			{
+				std::cout << "Agent loses, Agent value: " << strategy.getValue(handID) << std::endl;
 				return -1;
 			}
 		}

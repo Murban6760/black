@@ -16,6 +16,8 @@ public:
     void clearHand();
     void displayHand(CardDeck &cardDeck);
 
+    int getFaceValue(CardDeck &cardDeck);
+
     int getValue();
 
 private:

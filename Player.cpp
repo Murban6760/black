@@ -227,3 +227,11 @@ int Player::getHand(int handID, int index)
 }
 
 int Player::getNumCards(int handID)
+{
+    return hands[handID].size();
+}
+
+void Player::clearValues()
+{
+    values.clear();
+}

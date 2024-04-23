@@ -6,7 +6,10 @@ Strategy::Strategy():
     stratValue(0),
     stratCount(0),
     strategyWins(0)
-{}
+{
+    stratHands.resize(1);
+    stratValues.resize(1);
+}
 
 
 const double strategy[52][10]{
@@ -77,8 +80,24 @@ int Strategy::getPlayFlag()
 
 void Strategy::setHand(int handID, Player &player, CardDeck &cardDeck)
 {
-    for (int j = 0; j < player.g
+    for (int j = 0; j < player.getNumCards(handID); j++)
+    {
+        stratHands[handID].push_back(player.getHand(handID, j));
+    }
+    ///
     stratValue = cardDeck.computePlayerValue(stratHands[handID]);
+    stratValues[handID] = stratValue;
+    cardDeck.displayHand("SP", stratHands, handID);
+
+}
+
+void Strategy::getCard(int handID, CardDeck &cardDeck)
+{
+    int card = cardDeck.getAgentCard();
+	std::vector<int> x = stratHands[handID];
+    x.push_back(card);
+    stratValue = cardDeck.computePlayerValue(x);
+    stratHands[handID] = x;
     stratValues[handID] = stratValue;
     cardDeck.displayHand("SP", stratHands, handID);
 }
@@ -87,7 +106,7 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
 {
     printf("Strategy Player(SP) Hand %d: SP is choosing...", handID + 1);
     int action = strategy[getChoice(cardDeck, dealer, handID)%100][getChoice(cardDeck, dealer, handID)/100];
-    std::cout << std::endl;
+    std::cout << "SP chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", SP has a value of " << getValue(handID) << std::endl;
     switch(action)
     {
     case 1:
@@ -182,25 +201,34 @@ int Strategy::getChoice(CardDeck &cardDeck, Dealer &dealer,int handID)
 {
     if (stratHands.size() > 2)
     {
-        int x = getValue(handID) + 29 + (getDealerValue(dealer)* 100);
+        int x = getValue(handID) + 29 + ((dealer.getFaceValue(cardDeck)-2)* 100);
         return x;
     } else if (cardDeck.getCardName(stratHands[handID][0]) == "A" || cardDeck.getCardName(stratHands[handID][1]) == "A") 
     {
-        int x = getValue(handID) + 6 + (getDealerValue(dealer)* 100);
+        int x = getValue(handID) + 5 + ((dealer.getFaceValue(cardDeck)-2)* 100);
         return x;
     } else if (cardDeck.getCardName(stratHands[handID][0]) == cardDeck.getCardName(stratHands[handID][1])) 
     {
-        int x = (getValue(handID)/2) + 28 + (getDealerValue(dealer)* 100);
+        int x = (getValue(handID)/2) + 25 + ((dealer.getFaceValue(cardDeck)-2)* 100);
         return x;
     } else 
     {
-        int x = getValue(handID) + (getDealerValue(dealer)* 100);
+        int x = getValue(handID) - 5 + ((dealer.getFaceValue(cardDeck)-2)* 100);
         return x;
     }
 }
 
 void Strategy::clearHand()
 {
+    stratHands.resize(1);
     stratHands.clear();
+    stratHands.resize(1);
+}
+
+void Strategy::clearValues()
+{
+    stratValues.resize(1);
+    stratValues.clear();
+    stratValues.resize(1);
 }
 

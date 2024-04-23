@@ -6,40 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/workspaces/black/BlackJack.cpp
-iostream
--
-iomanip
--
-random
--
-map
--
-cstdio
--
-cstdlib
--
-BlackJackGame.hpp
-/workspaces/black/BlackJackGame.hpp
-CardDeck.hpp
-/workspaces/black/CardDeck.hpp
-Player.hpp
-/workspaces/black/Player.hpp
-Dealer.hpp
-/workspaces/black/Dealer.hpp
-Strategy.hpp
-/workspaces/black/Strategy.hpp
-
-/workspaces/black/BlackJackGame.hpp
-iostream
--
-Player.hpp
-/workspaces/black/Player.hpp
-Dealer.hpp
-/workspaces/black/Dealer.hpp
-Strategy.hpp
-/workspaces/black/Strategy.hpp
-
 /workspaces/black/CardDeck.hpp
 map
 -
@@ -55,12 +21,6 @@ vector
 -
 CardDeck.hpp
 /workspaces/black/CardDeck.hpp
-
-/workspaces/black/Player.cpp
-Player.hpp
-/workspaces/black/Player.hpp
-iostream
--
 
 /workspaces/black/Player.hpp
 vector
@@ -79,6 +39,8 @@ CardDeck.hpp
 /workspaces/black/CardDeck.hpp
 Dealer.hpp
 /workspaces/black/Dealer.hpp
+Player.hpp
+/workspaces/black/Player.hpp
 vector
 -
 

@@ -79,7 +79,8 @@ int main()
 
 		player.getCard(0, cardDeck);
 		dealer.getCard(cardDeck);
-		
+		strategy.setHand(0, player, cardDeck);
+
 
 		int playerFlag = 1;
 		int dealerFlag = 1;
@@ -87,7 +88,8 @@ int main()
 
 		checkWin(dealerFlag, playerFlag, player, dealer, 0);
 		checkAgent(dealer, strategy, strategyFlag, dealerFlag, 0);
-
+		
+		/// Player Actions
 		if (dealerFlag == 1 && playerFlag == 1)
 		{
 			for (int j = 0; j < player.getNumHands(); j++)
@@ -113,15 +115,20 @@ int main()
 				strategy.setPlayFlag(1);
 				while (strategy.getPlayFlag() && strategy.getValue(j) < 21)
 				{
-					if (strategy.getNumHands() > 1){
-						strategy.displayHand(cardDeck, j);
-					}
+					strategy.takeTurn(cardDeck, dealer, j);
 				}
 			}
 			cout << endl
 				 << endl;
 		}
 
+		//displaying Agent hands
+		for(int j = 0; j < strategy.getNumHands(); j++){
+		if (strategy.getNumHands() > 1){
+						strategy.displayHand(cardDeck, j);
+					}
+		}
+		
 		cout << "----------------------------------------------------------" << endl << endl;
 
 		cout << endl;
@@ -150,6 +157,9 @@ int main()
 			player.clearHand();
 			dealer.clearHand();
 			strategy.clearHand();
+			player.clearValues();
+			strategy.clearValues();
+			cardDeck.setInverseCount();
 		}
 		else 
 		{

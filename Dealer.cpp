@@ -10,7 +10,7 @@ void Dealer::getCard(CardDeck &cardDeck)
 {
     int handSize = hand.size();
 
-    int card = cardDeck.getCard();
+    int card = cardDeck.getDealerCard();
 	hand.push_back(card);
 
     value = cardDeck.computePlayerValue(hand);
@@ -51,4 +51,9 @@ void Dealer::displayHand(CardDeck &cardDeck)
 int Dealer::getValue()
 {
     return value;
+}
+
+int Dealer::getFaceValue(CardDeck &cardDeck)
+{
+    return cardDeck.getCardValue(hand[0]);
 }

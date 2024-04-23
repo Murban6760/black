@@ -21,6 +21,7 @@ CMakeFiles/BlackJack.dir/Player.cpp.o: ../Player.hpp
 
 CMakeFiles/BlackJack.dir/Strategy.cpp.o: ../CardDeck.hpp
 CMakeFiles/BlackJack.dir/Strategy.cpp.o: ../Dealer.hpp
+CMakeFiles/BlackJack.dir/Strategy.cpp.o: ../Player.hpp
 CMakeFiles/BlackJack.dir/Strategy.cpp.o: ../Strategy.cpp
 CMakeFiles/BlackJack.dir/Strategy.cpp.o: ../Strategy.hpp
 

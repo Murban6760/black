@@ -37,6 +37,7 @@ public:
 
 	void shuffleDeck();
 
+	void setInverseCount();
 	void displayHand(std::string name, std::vector<int> &hand, int offset, int display2);
 	void displayHand(std::string name, std::vector<std::vector<int>> &hand, int handID);
 
@@ -44,6 +45,8 @@ public:
 	int computeDealerValue(std::vector<int> &hand);
 
 	int getCard();
+	int getDealerCard();
+	int getAgentCard();
 	int getCardValue(int card);
 	std::string getCardName(int card);
 
@@ -56,6 +59,7 @@ private:
 
 	int cardNum;
 	int cardCount;
+	int inverseCount;
 
 	int cardOrder[52*NUMDECKS];
 

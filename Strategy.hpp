@@ -22,7 +22,9 @@ class Strategy{
         void setPlayFlag(int flagValue);
         int getPlayFlag();
         int getNumHands();
+        void getCard(int handID, CardDeck &cardDeck);
         void clearHand();
+        void clearValues();
 
     private:
         std::vector<std::vector<int>> stratHands;

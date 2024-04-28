@@ -63,6 +63,7 @@ int main()
 
 		player.setPlayFlag(1);
 		strategy.setPlayFlag(1);
+		dealer.setFlag(1);
 		
 		if (player.placeBet(0) <= 0){
 			cout << "You ran out of money!" << endl;
@@ -90,7 +91,7 @@ int main()
 		checkAgent(dealer, strategy, strategyFlag, dealerFlag, 0);
 		
 		/// Player Actions
-		if (dealerFlag == 1 && playerFlag == 1)
+		if (dealer.getFlag() == 1 && playerFlag == 1)
 		{
 			for (int j = 0; j < player.getNumHands(); j++)
 			{
@@ -108,12 +109,12 @@ int main()
 				 << endl;
 		}
 		// Summarizing for Agent win
-		if (dealerFlag == 1 && strategyFlag == 1)
+		if (dealer.getFlag() == 1 && strategyFlag == 1)
 		{
 			for (int j = 0; j < strategy.getNumHands(); j++)
 			{
 				strategy.setPlayFlag(1);
-				while (strategy.getPlayFlag() && strategy.getValue(j) < 21)
+				while (strategy.getPlayFlag() == 1 && strategy.getValue(j) < 21)
 				{
 					strategy.takeTurn(cardDeck, dealer, j);
 				}

@@ -13,7 +13,7 @@ void Dealer::getCard(CardDeck &cardDeck)
     int card = cardDeck.getDealerCard();
 	hand.push_back(card);
 
-    value = cardDeck.computePlayerValue(hand);
+    value = cardDeck.computeDealerValue(hand);
     
     if (handSize == 1)
         cardDeck.displayHand("Dealer", hand, 1, 1);  
@@ -56,4 +56,14 @@ int Dealer::getValue()
 int Dealer::getFaceValue(CardDeck &cardDeck)
 {
     return cardDeck.getCardValue(hand[0]);
+}
+
+void Dealer::setFlag(int value)
+{
+    dealerFlag = value;
+}
+
+int Dealer::getFlag()
+{
+    return dealerFlag;
 }

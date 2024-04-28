@@ -137,6 +137,11 @@ std::string CardDeck::getCardName(int card)
 	return cardDeck[card].name;
 }
 
+void CardDeck::setInverseCount()
+{
+	inverseCount = cardCount + 2;
+}
+
 
 void CardDeck::displayHand(std::string name, std::vector<int> &hand, int offset, int display2)
 {
@@ -147,11 +152,6 @@ void CardDeck::displayHand(std::string name, std::vector<int> &hand, int offset,
 	}
 
 	std::cout << std::endl << std::endl;
-}
-
-void CardDeck::setInverseCount()
-{
-	inverseCount = cardCount + 2;
 }
 
 void CardDeck::displayHand(std::string name, std::vector<std::vector<int>> &hand, int handID)

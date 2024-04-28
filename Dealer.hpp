@@ -11,6 +11,8 @@ public:
 
     Dealer();
 
+    void setFlag(int value);
+    int getFlag();
     void getCard(CardDeck &cardDeck);
     void takeTurn(CardDeck &cardDeck);
     void clearHand();
@@ -22,6 +24,7 @@ public:
 
 private:
 
+    int dealerFlag;
 	std::vector<int> hand;
 	int value = 0;
 

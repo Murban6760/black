@@ -16,12 +16,14 @@ void checkWin(int dealerFlag, int playerFlag, Player &player, Dealer &dealer, in
 			std::cout << "Push" << std::endl;
             playerFlag = 0;
             dealerFlag = 0;
+			dealer.setFlag(0);
 		}
 		else
 		{
 			std::cout << "Dealer Wins" << std::endl;
 			playerFlag = 0;
             dealerFlag = 0;
+			dealer.setFlag(0);
 		}
 	}
 	else if (player.getValue(handID) == 21)
@@ -29,10 +31,12 @@ void checkWin(int dealerFlag, int playerFlag, Player &player, Dealer &dealer, in
 			std::cout << "Player wins!" << std::endl;
         	playerFlag = 0;
 			dealerFlag = 1;
+			dealer.setFlag(1);
 		}
     	else {
         	playerFlag = 0;
 			dealerFlag = 1;   
+			dealer.setFlag(1);
     	}
 }
 
@@ -44,16 +48,17 @@ int summarizeResults(Dealer &dealer, Player &player, int handID)
 		{
 			if (player.getValue(handID) > 21)
             {
-				std::cout << "PUSH: Player and Dealer Bust, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
-                
-				player.addToWallet(player.getBet(handID));
+				std::cout << "Player busts, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
+                std::cout << "Player bet is " << player.getBet(handID) << std::endl;
+				///player.addToWallet(2*player.getBet(handID));
 
-                return 0;
+                return -1;
             }
 			else
             {
                 std::cout << "Player wins, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
-				player.addToWallet(2*player.getBet(handID));
+				std::cout << "Player bet is " << player.getBet(handID) << std::endl;
+				player.addToWallet(3*player.getBet(handID));
                 return 1;
             }
 		}
@@ -62,7 +67,7 @@ int summarizeResults(Dealer &dealer, Player &player, int handID)
 			if (player.getValue(handID) > 21)
 			{
 				std::cout << "Player Busts, Dealer Wins, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
-
+				std::cout << "Player bet is " << player.getBet(handID) << std::endl;
                 return -1;
 			}
 			else
@@ -70,20 +75,22 @@ int summarizeResults(Dealer &dealer, Player &player, int handID)
 				if (player.getValue(handID) == dealer.getValue())
 				{
 					std::cout << "PUSH, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
-					player.addToWallet(player.getBet(handID));
+					std::cout << "Player bet is " << player.getBet(handID) << std::endl;
+					player.addToWallet(2*player.getBet(handID));
 
                     return 0;
 				}
 				else if (player.getValue(handID) > dealer.getValue())
 				{
 					std::cout << "Player Wins, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
-					player.addToWallet(2*player.getBet(handID));
+					std::cout << "Player bet is " << player.getBet(handID) << std::endl;
+					player.addToWallet(3*player.getBet(handID));
                     return 1;
 				}
                 else
 				{
 					std::cout << "Dealer Wins, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
-
+					std::cout << "Player bet is " << player.getBet(handID) << std::endl;
                     return -1;
 				}
 			}
@@ -103,12 +110,14 @@ void checkAgent (Dealer &dealer, Strategy &strategy, int strategyFlag, int deale
 		{
 			strategyFlag = 0;
 			dealerFlag = 0;
+			dealer.setFlag(0);
 		}
 		else
 		{
 			std::cout << "Dealer beats Agent" << std::endl;
 			strategyFlag = 0;
 			dealerFlag = 0;
+			dealer.setFlag(0);
 		}
 	}
 	else if (strategy.getValue(handID) == 21)
@@ -116,11 +125,13 @@ void checkAgent (Dealer &dealer, Strategy &strategy, int strategyFlag, int deale
 		std::cout << "Agent wins" << std::endl;
 		strategyFlag = 0;
 		dealerFlag = 0;
+		dealer.setFlag(0);
 	}
 	else
 	{
 		strategyFlag = 0;
 		dealerFlag = 1;
+		dealer.setFlag(1);
 	}
 }
 
@@ -132,8 +143,8 @@ int summarizeAgent (Dealer &dealer, Strategy &strategy, int handID)
 	{
 		if (strategy.getValue(handID) > 21)
 		{
-			std::cout << "PUSH: agent and dealer bust..." << std::endl;
-			return 0;
+			std::cout << "Agent busts..." << std::endl;
+			return -1;
 		}
 		else
 		{

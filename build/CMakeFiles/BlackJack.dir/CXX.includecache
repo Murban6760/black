@@ -16,31 +16,15 @@ string
 chrono
 -
 
-/workspaces/black/Dealer.hpp
-vector
--
-CardDeck.hpp
-/workspaces/black/CardDeck.hpp
-
+/workspaces/black/Player.cpp
+Player.hpp
 /workspaces/black/Player.hpp
-vector
--
-CardDeck.hpp
-/workspaces/black/CardDeck.hpp
-
-/workspaces/black/Strategy.cpp
-Strategy.hpp
-/workspaces/black/Strategy.hpp
 iostream
 -
 
-/workspaces/black/Strategy.hpp
-CardDeck.hpp
-/workspaces/black/CardDeck.hpp
-Dealer.hpp
-/workspaces/black/Dealer.hpp
-Player.hpp
 /workspaces/black/Player.hpp
 vector
 -
+CardDeck.hpp
+/workspaces/black/CardDeck.hpp
 

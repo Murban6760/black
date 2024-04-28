@@ -21,8 +21,21 @@ double Player::placeBet(int handID)
     bets[handID] = 5;
     if ((wallet - bets[handID]) < 0){
         return 0;
-    } else{
+    } else {
     wallet -= bets[handID];
+
+    return bets[handID];
+    }
+}
+
+double Player::betDown(int handID)
+{
+    if ((wallet - bets[handID]) == 0) 
+    {
+        return 0;
+    } else {
+    wallet -= bets[handID];
+    bets[handID] *= 2;
 
     return bets[handID];
     }
@@ -44,19 +57,6 @@ double Player::getBet()
     return x;
 }
 
-double Player::betDown(int handID)
-{
-    if ((wallet - bets[handID]) == 0) 
-    {
-        return 0;
-    } else {
-    wallet -= bets[handID];
-    bets[handID] *= 2;
-
-    return bets[handID];
-    }
-}
-
 int Player::getPlayFlag()
 {
     return playFlag;
@@ -67,10 +67,10 @@ void Player::setPlayFlag(int flagValue)
     playFlag = flagValue;
 }
 
-void Player::addToWallet(double money)
+void Player::addToWallet(double bet)
 {
 
-    wallet += money;
+    wallet += bet;
 
 }
 
@@ -101,8 +101,8 @@ double Player::takeTurn(CardDeck &cardDeck, int handID)
 
     std::cout << std::endl;
 
-    if (getValue(handID) < 22){
-    switch (playerAction) {
+    if (getValue(handID) < 22)
+    switch (playerAction){
     case 1:
     {
         getCard(handID, cardDeck);
@@ -136,18 +136,14 @@ double Player::takeTurn(CardDeck &cardDeck, int handID)
             int y = getValue(handID)/2;
             wallet -= getBet();
             bets.push_back(getBet());
-            /* This writes the values in each hand, used for debugging.
-            for (int j = 0; j < bets.size(); j++)
-            {
-                std::cout << bets[j] << std::endl;
-            }
-            */
             hand2.push_back(x);
             hands[handID].erase(hands[handID].begin() + 1);
             hands.push_back(hand2);
             hand2.clear();
             values[handID] = y;
             values.push_back(y);
+            getCard(handID, cardDeck);
+            getCard(splitCount, cardDeck);
             cardDeck.displayHand("Player", hands, 1);
             return 0;
         }
@@ -170,19 +166,19 @@ double Player::takeTurn(CardDeck &cardDeck, int handID)
 
         } else {
         std::cout << "Player Doubled Down. Bet is now " << betDown(handID) << ". Wallet is now " << Player::getPlayerWallet() << std::endl;
+        setPlayFlag(0);
         getCard(handID, cardDeck);
-
         return 0;
         }
         break;
     }
     default:
     {
-    std::cout << "Wrong Key Dummy" << std::endl;
-    return 1;
-    break;
-         }
-     }
+        std::cout << "Wrong Key Dummy" << std::endl;
+        return 1;
+        break;
+    }
+     
     }
 }
 
@@ -234,4 +230,5 @@ int Player::getNumCards(int handID)
 void Player::clearValues()
 {
     values.clear();
+    splitCount = 0;
 }

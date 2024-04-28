@@ -16,6 +16,13 @@ double Player::getPlayerWallet()
     return wallet;
 }
 
+double Player::initBet(int handID)
+{
+    double temp = wallet;
+    temp -=5;
+    return temp;
+}
+
 double Player::placeBet(int handID) 
 {
     bets[handID] = 5;

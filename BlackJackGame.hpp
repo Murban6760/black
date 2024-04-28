@@ -17,6 +17,7 @@ void checkWin(int dealerFlag, int playerFlag, Player &player, Dealer &dealer, in
             playerFlag = 0;
             dealerFlag = 0;
 			dealer.setFlag(0);
+			player.addToWallet(player.getBet(handID));
 		}
 		else
 		{
@@ -32,6 +33,7 @@ void checkWin(int dealerFlag, int playerFlag, Player &player, Dealer &dealer, in
         	playerFlag = 0;
 			dealerFlag = 1;
 			dealer.setFlag(1);
+			player.addToWallet(2*player.getBet(handID));
 		}
     	else {
         	playerFlag = 0;
@@ -58,7 +60,7 @@ int summarizeResults(Dealer &dealer, Player &player, int handID)
             {
                 std::cout << "Player wins, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
 				std::cout << "Player bet is " << player.getBet(handID) << std::endl;
-				player.addToWallet(3*player.getBet(handID));
+				player.addToWallet(2*player.getBet(handID));
                 return 1;
             }
 		}
@@ -76,7 +78,7 @@ int summarizeResults(Dealer &dealer, Player &player, int handID)
 				{
 					std::cout << "PUSH, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
 					std::cout << "Player bet is " << player.getBet(handID) << std::endl;
-					player.addToWallet(2*player.getBet(handID));
+					player.addToWallet(player.getBet(handID));
 
                     return 0;
 				}
@@ -84,7 +86,7 @@ int summarizeResults(Dealer &dealer, Player &player, int handID)
 				{
 					std::cout << "Player Wins, Player: " << player.getValue(handID) << " Dealer: " << dealer.getValue() << std::endl;
 					std::cout << "Player bet is " << player.getBet(handID) << std::endl;
-					player.addToWallet(3*player.getBet(handID));
+					player.addToWallet(2*player.getBet(handID));
                     return 1;
 				}
                 else

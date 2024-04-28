@@ -14,6 +14,7 @@ public:
 
     int getNumCards(int handID);
     double placeBet(int handID);
+    double initBet(int handID);
 
     int getHand(int handID, int index);
 

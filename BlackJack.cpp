@@ -65,7 +65,7 @@ int main()
 		strategy.setPlayFlag(1);
 		dealer.setFlag(1);
 		
-		if (player.placeBet(0) <= 0){
+		if (player.initBet(0) <= 0){
 			cout << "You ran out of money!" << endl;
 			break;
 		} else {

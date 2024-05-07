@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : BlackJack.cpp
-// Author      : Matt Urban and Tom Urban
+// Author      : Matt Urban
 // Version     :
 // Copyright   : Your copyright notice
 // Description : Hello World in C++, Ansi-style

@@ -3,7 +3,7 @@
  * CardDeck.hpp
  *
  *  Created on: Jun 29, 2023
- *      Author: Tom
+ *      Author: Matt Urban
  */
 
 #ifndef CARDDECK_HPP_

@@ -117,6 +117,7 @@ void Agent::printStrat()
         {
                 for (int j = 0; j < newStrat[i].size(); j++)
                 {
+                        printf("%d: ", i);
                         printf("%d,", newStrat[i][j].name);
                         printf("%f,", newStrat[i][j].numActions);
                         printf("%d,", newStrat[i][j].numVisits);
@@ -125,6 +126,11 @@ void Agent::printStrat()
                 }
                 printf("\n");
         }
+}
+
+void Agent::printElement(int i, int j)
+{
+       printf("%d,", newStrat[i][j].numVisits); 
 }
 
 void Agent::updateVisits(int i, int j)
@@ -141,18 +147,18 @@ void Agent::writeStrat()
                 std::cerr << "Error writing File" << std::endl;
         }
 
-        for (const auto &row : newStrat)
+    auto it = newStrat.begin() + 52;
+    for (; it != newStrat.end(); ++it)
+    {
+        for (const auto &element : *it)
         {
-                for (const auto &element : row)
-                {
-                        outFile << element.name << " " << element.numActions << " " << element.numVisits << " " << element.cardAction << " " << element.stateAction;
-                        outFile << " ";
-                }
-                outFile << std::endl;
+            outFile << element.name << " " << element.numActions << " " << element.numVisits << " " << element.cardAction << " " << element.stateAction;
+            outFile << " ";
         }
-        outFile.close();
+        outFile << std::endl;
+    }
+    outFile.close();
 }
-
 /*
 double qTable[52][4]
 {

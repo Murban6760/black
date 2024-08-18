@@ -18,8 +18,9 @@
 #include "CardDeck.hpp"
 #include "Player.hpp"
 #include "Dealer.hpp"
-#include "Strategy.hpp"
 #include "Agent.hpp"
+#include "Strategy.hpp"
+
 
 using namespace std;
 
@@ -53,7 +54,7 @@ int main()
 
 	Agent agent;
 	agent.loadStrat();
-
+	agent.printStrat();
 	bool playerContFlag = true;
 
 	while (playerContFlag && cardDeck.getDeckCardCount() > 12)

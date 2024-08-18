@@ -4,9 +4,6 @@
 CMakeFiles/BlackJack.dir/Agent.cpp.o: ../Agent.cpp
 CMakeFiles/BlackJack.dir/Agent.cpp.o: ../Agent.hpp
 CMakeFiles/BlackJack.dir/Agent.cpp.o: ../CardDeck.hpp
-CMakeFiles/BlackJack.dir/Agent.cpp.o: ../Dealer.hpp
-CMakeFiles/BlackJack.dir/Agent.cpp.o: ../Player.hpp
-CMakeFiles/BlackJack.dir/Agent.cpp.o: ../Strategy.hpp
 
 CMakeFiles/BlackJack.dir/BlackJack.cpp.o: ../Agent.hpp
 CMakeFiles/BlackJack.dir/BlackJack.cpp.o: ../BlackJack.cpp

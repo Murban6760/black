@@ -2,13 +2,9 @@
 #define AGENT_HPP_
 
 #include "CardDeck.hpp"
-#include "Dealer.hpp"
-#include "Player.hpp"
-#include "Strategy.hpp"
 #include <vector>
 
-class Agent
-{
+class Agent{
 
 public:
     Agent();
@@ -32,6 +28,7 @@ public:
 
     void loadStrat();
     void printStrat();
+    void printElement(int i, int j);
     void updateVisits(int i, int j);
     void writeStrat();
 

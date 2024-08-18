@@ -6,6 +6,30 @@
 
 #IncludeRegexTransform: 
 
+/workspaces/black/Agent.cpp
+Agent.hpp
+/workspaces/black/Agent.hpp
+iostream
+-
+fstream
+-
+sstream
+-
+string
+-
+
+/workspaces/black/Agent.hpp
+CardDeck.hpp
+/workspaces/black/CardDeck.hpp
+Dealer.hpp
+/workspaces/black/Dealer.hpp
+Player.hpp
+/workspaces/black/Player.hpp
+Strategy.hpp
+/workspaces/black/Strategy.hpp
+vector
+-
+
 /workspaces/black/BlackJack.cpp
 iostream
 -
@@ -29,6 +53,8 @@ Dealer.hpp
 /workspaces/black/Dealer.hpp
 Strategy.hpp
 /workspaces/black/Strategy.hpp
+Agent.hpp
+/workspaces/black/Agent.hpp
 
 /workspaces/black/BlackJackGame.hpp
 iostream
@@ -40,14 +66,6 @@ Dealer.hpp
 Strategy.hpp
 /workspaces/black/Strategy.hpp
 
-/workspaces/black/CardDeck.cpp
-CardDeck.hpp
-/workspaces/black/CardDeck.hpp
-string
--
-iostream
--
-
 /workspaces/black/CardDeck.hpp
 map
 -
@@ -58,23 +76,11 @@ string
 chrono
 -
 
-/workspaces/black/Dealer.cpp
-Dealer.hpp
-/workspaces/black/Dealer.hpp
-iostream
--
-
 /workspaces/black/Dealer.hpp
 vector
 -
 CardDeck.hpp
 /workspaces/black/CardDeck.hpp
-
-/workspaces/black/Player.cpp
-Player.hpp
-/workspaces/black/Player.hpp
-iostream
--
 
 /workspaces/black/Player.hpp
 vector
@@ -91,6 +97,8 @@ iostream
 /workspaces/black/Strategy.hpp
 CardDeck.hpp
 /workspaces/black/CardDeck.hpp
+Agent.hpp
+/workspaces/black/Agent.hpp
 Dealer.hpp
 /workspaces/black/Dealer.hpp
 Player.hpp

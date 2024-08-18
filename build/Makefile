@@ -520,6 +520,33 @@ ContinuousSubmit/fast:
 	$(MAKE) -f CMakeFiles/ContinuousSubmit.dir/build.make CMakeFiles/ContinuousSubmit.dir/build
 .PHONY : ContinuousSubmit/fast
 
+Agent.o: Agent.cpp.o
+
+.PHONY : Agent.o
+
+# target to build an object file
+Agent.cpp.o:
+	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Agent.cpp.o
+.PHONY : Agent.cpp.o
+
+Agent.i: Agent.cpp.i
+
+.PHONY : Agent.i
+
+# target to preprocess a source file
+Agent.cpp.i:
+	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Agent.cpp.i
+.PHONY : Agent.cpp.i
+
+Agent.s: Agent.cpp.s
+
+.PHONY : Agent.s
+
+# target to generate assembly for a file
+Agent.cpp.s:
+	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Agent.cpp.s
+.PHONY : Agent.cpp.s
+
 BlackJack.o: BlackJack.cpp.o
 
 .PHONY : BlackJack.o
@@ -695,6 +722,9 @@ help:
 	@echo "... ContinuousMemCheck"
 	@echo "... ContinuousTest"
 	@echo "... ContinuousSubmit"
+	@echo "... Agent.o"
+	@echo "... Agent.i"
+	@echo "... Agent.s"
 	@echo "... BlackJack.o"
 	@echo "... BlackJack.i"
 	@echo "... BlackJack.s"

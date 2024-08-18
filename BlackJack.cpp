@@ -19,6 +19,7 @@
 #include "Player.hpp"
 #include "Dealer.hpp"
 #include "Strategy.hpp"
+#include "Agent.hpp"
 
 using namespace std;
 
@@ -50,6 +51,9 @@ int main()
 
 	Dealer dealer;
 
+	Agent agent;
+	agent.loadStrat();
+
 	bool playerContFlag = true;
 
 	while (playerContFlag && cardDeck.getDeckCardCount() > 12)
@@ -64,7 +68,7 @@ int main()
 		player.setPlayFlag(1);
 		strategy.setPlayFlag(1);
 		dealer.setFlag(1);
-		
+
 		if (player.initBet(0) <= 0){
 			cout << "You ran out of money!" << endl;
 			break;
@@ -116,14 +120,14 @@ int main()
 				strategy.setPlayFlag(1);
 				while (strategy.getPlayFlag() == 1 && strategy.getValue(j) < 21)
 				{
-					strategy.takeTurn(cardDeck, dealer, j);
+					strategy.takeTurn(cardDeck, agent, dealer, j);
 				}
 			}
 			cout << endl
 				 << endl;
 		}
 
-		//displaying Agent hands
+		//displaying Strategy hands
 		for(int j = 0; j < strategy.getNumHands(); j++){
 		if (strategy.getNumHands() > 1){
 						strategy.displayHand(cardDeck, j);
@@ -173,7 +177,7 @@ int main()
 		player.betClear();
 	}
 	
-
+	agent.writeStrat();
 	printf("Program over \n");
 	return 0;
 }

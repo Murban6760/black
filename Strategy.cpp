@@ -65,8 +65,13 @@ const double strategy[52][10]{
        2,2,2,2,2,2,2,2,2, 2, // 18 > 2 cards
        2,2,2,2,2,2,2,2,2, 2, // 19 > 2 cards
        2,2,2,2,2,2,2,2,2, 2, // 20 > 2 cards
-       2,2,2,2,2,2,2,2,2, 2, // 21 > 2 cards
-};
+       2,2,2,2,2,2,2,2,2, 2 // 21 > 2 cards
+}; 
+
+int Strategy::getStrategy(int i, int j)
+{
+    return strategy[i][j];
+}
 
 void Strategy::setPlayFlag(int flagValue)
 {
@@ -102,10 +107,13 @@ void Strategy::getCard(int handID, CardDeck &cardDeck)
     cardDeck.displayHand("SP", stratHands, handID);
 }
 
-double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
+double Strategy::takeTurn(CardDeck &cardDeck, Agent &agent, Dealer &dealer, int handID)
 {
     printf("Strategy Player(SP) Hand %d: SP is choosing...", handID + 1);
-    int action = strategy[getChoice(cardDeck, dealer, handID)%100][getChoice(cardDeck, dealer, handID)/100];
+    int i = getChoice(cardDeck, dealer, handID)%100;
+    int j = getChoice(cardDeck, dealer, handID)/100;
+    int action = strategy[i][j]; // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
+    agent.updateVisits(i, j);
     std::cout << "SP chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", SP has a value of " << getValue(handID) << std::endl;
     switch(action)
     {
@@ -123,7 +131,6 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
         break;
     case 2:
     {
-
         cardDeck.displayHand("SP", stratHands, handID);
         setPlayFlag(0);
 

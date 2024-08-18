@@ -16,6 +16,11 @@
 },
 {
   "directory": "/workspaces/black/build",
+  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/Agent.cpp.o -c /workspaces/black/Agent.cpp",
+  "file": "/workspaces/black/Agent.cpp"
+},
+{
+  "directory": "/workspaces/black/build",
   "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/Strategy.cpp.o -c /workspaces/black/Strategy.cpp",
   "file": "/workspaces/black/Strategy.cpp"
 },

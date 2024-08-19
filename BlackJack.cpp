@@ -55,6 +55,7 @@ int main()
 	Agent agent;
 	agent.loadStrat();
 	agent.printStrat();
+
 	bool playerContFlag = true;
 
 	while (playerContFlag && cardDeck.getDeckCardCount() > 12)

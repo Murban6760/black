@@ -112,12 +112,8 @@ double Strategy::takeTurn(CardDeck &cardDeck, Agent &agent, Dealer &dealer, int 
     printf("Strategy Player(SP) Hand %d: SP is choosing...", handID + 1);
     int i = getChoice(cardDeck, dealer, handID)%100;
     int j = getChoice(cardDeck, dealer, handID)/100;
-    std::cout << i << "   " << j << std::endl;
     int action = strategy[i][j]; // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
-    std::cout << "checkpoint" << std::endl;
-    agent.printElement(i, j);
     agent.updateVisits(i, j);
-    std::cout << "checkpoint 2" << std::endl;
     std::cout << "SP chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", SP has a value of " << getValue(handID) << std::endl;
     switch(action)
     {

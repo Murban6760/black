@@ -62,11 +62,13 @@ double strategy[52][10]{
 
 Agent::Agent() : 
         value(0)
-{}
+{
+        newStrat.clear();
+}
 
 void Agent::loadStrat()
 {
-        std::ifstream inFile("../BasePolicy.txt");
+        std::ifstream inFile("../Policy.txt");
         if (!inFile)
         {
                 std::cerr << "Error reading File" << std::endl;
@@ -140,14 +142,14 @@ void Agent::updateVisits(int i, int j)
 
 void Agent::writeStrat()
 {
-        std::ofstream outFile("../BasePolicy.txt");
+        std::ofstream outFile("../Policy.txt");
 
         if (!outFile)
         {
                 std::cerr << "Error writing File" << std::endl;
         }
 
-    auto it = newStrat.begin() + 52;
+    auto it = newStrat.begin();
     for (; it != newStrat.end(); ++it)
     {
         for (const auto &element : *it)

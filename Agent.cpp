@@ -86,7 +86,7 @@ void Agent::loadStrat()
                                 stateInfo.stateAction = 0;
                                 stratRow[j] = stateInfo;
                         }
-                        newStrat.push_back(stratRow);
+                        newStrat[i] = stratRow;
                 }
 
                 return;

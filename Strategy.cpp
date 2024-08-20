@@ -98,7 +98,7 @@ void Strategy::setHand(int handID, Player &player, CardDeck &cardDeck)
 
 void Strategy::getCard(int handID, CardDeck &cardDeck)
 {
-    int card = cardDeck.getAgentCard();
+    int card = cardDeck.getStratCard();
 	std::vector<int> x = stratHands[handID];
     x.push_back(card);
     stratValue = cardDeck.computePlayerValue(x);
@@ -107,13 +107,13 @@ void Strategy::getCard(int handID, CardDeck &cardDeck)
     cardDeck.displayHand("SP", stratHands, handID);
 }
 
-double Strategy::takeTurn(CardDeck &cardDeck, Agent &agent, Dealer &dealer, int handID)
+double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
 {
     printf("Strategy Player(SP) Hand %d: SP is choosing...", handID + 1);
-    int i = getChoice(cardDeck, dealer, handID)%100;
-    int j = getChoice(cardDeck, dealer, handID)/100;
-    int action = strategy[i][j]; // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
-    agent.updateVisits(i, j);
+    //int i = getChoice(cardDeck, dealer, handID)%100;
+    //int j = getChoice(cardDeck, dealer, handID)/100;
+    int action = strategy[getChoice(cardDeck, dealer, handID)%100][getChoice(cardDeck, dealer, handID)/100]; // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
+    ///agent.updateVisits(i, j);
     std::cout << "SP chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", SP has a value of " << getValue(handID) << std::endl;
     switch(action)
     {

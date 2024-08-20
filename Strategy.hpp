@@ -2,7 +2,7 @@
 #define STRATEGY_HPP_
 
 #include "CardDeck.hpp"
-#include "Agent.hpp"
+///#include "Agent.hpp"
 #include "Dealer.hpp"
 #include "Player.hpp"
 #include <vector>
@@ -17,7 +17,7 @@ class Strategy{
         int getStrategy(int i, int j);
 
         void displayHand(CardDeck &cardDeck, int handID);
-        double takeTurn(CardDeck &cardDeck, Agent &agent, Dealer &dealer, int handID);
+        double takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID);
         void setHand(int handID, Player &player, CardDeck &cardDeck);
         int getValue(int handID);
         int getDealerValue(Dealer &dealer);

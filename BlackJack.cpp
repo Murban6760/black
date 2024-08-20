@@ -53,8 +53,9 @@ int main()
 	Dealer dealer;
 
 	Agent agent;
+	int agentWins = 0;
 	agent.loadStrat();
-	agent.printStrat();
+	//agent.printStrat();
 
 	bool playerContFlag = true;
 
@@ -69,6 +70,7 @@ int main()
 
 		player.setPlayFlag(1);
 		strategy.setPlayFlag(1);
+		agent.setPlayFlag(1);
 		dealer.setFlag(1);
 
 		if (player.initBet(0) <= 0){
@@ -87,15 +89,18 @@ int main()
 		player.getCard(0, cardDeck);
 		dealer.getCard(cardDeck);
 		strategy.setHand(0, player, cardDeck);
+		agent.setHand(0, player, dealer, cardDeck);
 
 
 		int playerFlag = 1;
 		int dealerFlag = 1;
 		int strategyFlag = 1;
+		int agentFlag = 1;
 
 		checkWin(dealerFlag, playerFlag, player, dealer, 0);
-		checkAgent(dealer, strategy, strategyFlag, dealerFlag, 0);
-		
+		checkStrat(dealer, strategy, strategyFlag, dealerFlag, 0);
+		checkAgent(dealer, agent, agentFlag, dealerFlag, 0);
+
 		/// Player Actions
 		if (dealer.getFlag() == 1 && playerFlag == 1)
 		{
@@ -122,7 +127,7 @@ int main()
 				strategy.setPlayFlag(1);
 				while (strategy.getPlayFlag() == 1 && strategy.getValue(j) < 21)
 				{
-					strategy.takeTurn(cardDeck, agent, dealer, j);
+					strategy.takeTurn(cardDeck, dealer, j);
 				}
 			}
 			cout << endl
@@ -135,7 +140,30 @@ int main()
 						strategy.displayHand(cardDeck, j);
 					}
 		}
-		
+
+		// Agent turn
+		if (dealer.getFlag() == 1 && agentFlag == 1)
+		{
+			for (int j = 0; j < agent.getNumHands(); j++)
+			{
+				agent.setPlayFlag(1);
+				while (agent.getPlayFlag() == 1 && agent.getValue(j) < 21)
+				{
+					agent.takeTurn(cardDeck, dealer, j);
+				}
+			}
+			cout << endl
+				 << endl;
+		}
+
+		//displaying Agent hands
+		for(int j = 0; j < agent.getNumHands(); j++){
+		if (agent.getNumHands() > 1){
+						agent.displayHand(cardDeck, j);
+					}
+		}
+		/// Turns ^
+
 		cout << "----------------------------------------------------------" << endl << endl;
 
 		cout << endl;
@@ -145,10 +173,14 @@ int main()
 			playerWins += summarizeResults(dealer, player, j);
 		}
 		for (int j = 0; j < strategy.getNumHands(); j++){
-			strategyWins += summarizeAgent(dealer, strategy, j);
+			strategyWins += summarizeStrategy(dealer, strategy, j);
+		}
+		for (int j = 0; j < agent.getNumHands(); j++){
+			agentWins += summarizeAgent(dealer, agent, j);
 		}
 		cout << "Player Score: " << playerWins << " // " << "Player Wallet: "<< player.getPlayerWallet() << endl;
-		cout << "Agent Score: " << strategyWins << " // " << endl;
+		cout << "Strategy Score: " << strategyWins << " // " << endl;
+		cout << "AI Score: " << agentWins << " // " << endl;
 		cout << "No. of Cards Used: " <<  cardDeck.getCardCount() << " Remaining Cards: " << cardDeck.getDeckCardCount() << endl << endl;
 		
 		cout << "----------------------------------------------------------" << endl << endl;
@@ -166,6 +198,8 @@ int main()
 			strategy.clearHand();
 			player.clearValues();
 			strategy.clearValues();
+			agent.clearValues();
+			agent.clearHand();
 			cardDeck.setInverseCount();
 		}
 		else 

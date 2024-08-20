@@ -46,6 +46,7 @@ public:
 
 	int getCard();
 	int getDealerCard();
+	int getStratCard();
 	int getAgentCard();
 	int getCardValue(int card);
 	std::string getCardName(int card);
@@ -60,6 +61,7 @@ private:
 	int cardNum;
 	int cardCount;
 	int inverseCount;
+	int inverseCount2;
 
 	int cardOrder[52*NUMDECKS];
 

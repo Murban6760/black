@@ -18,14 +18,15 @@ public:
         int numVisits = 0;
         int cardAction = 0;
         int learnedStrat = 0;
+        double epsilon = 0.0;
         double Qvec[4];
 
         // Constructor
-        StateInfo() : name(0), numActions(4), numVisits(0), cardAction(0), learnedStrat(0), Qvec{0.0, 0.0, 0.0, 0.0} {};
+        StateInfo() : name(0), numActions(4), numVisits(0), cardAction(0), learnedStrat(0), epsilon(0.0), Qvec{0.0, 0.0, 0.0, 0.0} {};
 
         // Parameterized constructor
-        StateInfo(int &cardName, int &cardActions, int &nV, int &cA, int &sA)
-            : name(cardName), numActions(cardActions), numVisits(nV), cardAction(cA), learnedStrat(sA), Qvec{0.0, 0.0, 0.0, 0.0} {};
+        StateInfo(int &cardName, int &cardActions, int &nV, int &cA, int &sA, double &ep)
+            : name(cardName), numActions(cardActions), numVisits(nV), cardAction(cA), learnedStrat(sA), epsilon(ep), Qvec{0.0, 0.0, 0.0, 0.0} {};
     } StateInfo;
 
     void loadStrat();
@@ -49,6 +50,8 @@ public:
 
     void setPlayFlag(int flagValue);
     int getPlayFlag();
+
+    double getEpsilon(int x);
 
     void loss();
 

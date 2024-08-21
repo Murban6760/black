@@ -91,6 +91,7 @@ void Agent::loadStrat()
 				stateInfo.numVisits = 0;
 				stateInfo.cardAction = strategy[i][j];
 				stateInfo.learnedStrat = 0;
+				stateInfo.epsilon = 0.0;
 				stratRow[j] = stateInfo;
 			}
 			newStrat[i] = stratRow;
@@ -106,7 +107,7 @@ void Agent::loadStrat()
 			std::vector<StateInfo> row;
 			std::istringstream iss(line);
 			StateInfo element;
-			while (iss >> element.name >> element.numActions >> element.numVisits >> element.cardAction >> element.learnedStrat >> element.Qvec[0] >> element.Qvec[1] >> element.Qvec[2] >> element.Qvec[3])
+			while (iss >> element.name >> element.numActions >> element.numVisits >> element.cardAction >> element.learnedStrat >> element. epsilon >> element.Qvec[0] >> element.Qvec[1] >> element.Qvec[2] >> element.Qvec[3])
 			{
 				row.push_back(element);
 				// ignore the delimiter between structs (3 spaces)
@@ -131,6 +132,7 @@ void Agent::printStrat()
 			printf("%d,", newStrat[i][j].numVisits);
 			printf("%d,", newStrat[i][j].cardAction);
 			printf("%d,", newStrat[i][j].learnedStrat);
+			printf("%f,", newStrat[i][j].epsilon);
 			printf("%f,", newStrat[i][j].Qvec[0]);
 			printf("%f,", newStrat[i][j].Qvec[1]);
 			printf("%f,", newStrat[i][j].Qvec[2]);
@@ -152,7 +154,7 @@ void Agent::updateVisits(int i, int j)
 
 void Agent::writeStrat()
 {
-	printStrat();
+	///printStrat();
 	std::ofstream outFile("../Policy.txt");
 	if (!outFile)
 	{
@@ -164,7 +166,7 @@ void Agent::writeStrat()
 	{
 		for (const auto &element : *it)
 		{
-			outFile << element.name << " " << element.numActions << " " << element.numVisits << " " << element.cardAction << " " << element.learnedStrat << " " << element.Qvec[0] << " " << element.Qvec[1] << " " << element.Qvec[2] << " " << element.Qvec[3];
+			outFile << element.name << " " << element.numActions << " " << element.numVisits << " " << element.cardAction << " " << element.learnedStrat << " " << element.epsilon << " " << element.Qvec[0] << " " << element.Qvec[1] << " " << element.Qvec[2] << " " << element.Qvec[3];
 			outFile << " ";
 		}
 		outFile << std::endl;
@@ -179,6 +181,7 @@ double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
 	///handHistory.push_back(i);
     int action = strategy[i%100][i/100]; // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
     updateVisits(i%100, i/100);
+	getEpsilon(i);
 	choiceHistory.push_back(action);
     std::cout << "AI chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", AI has a value of " << getValue(handID) << std::endl;
     switch(action)
@@ -352,6 +355,16 @@ void Agent::clearHand()
 	choiceHistory.clear();
 	handHistory.resize(0);
 	choiceHistory.resize(0);
+}
+
+double Agent::getEpsilon(int x)
+{
+	std::random_device rd;
+    auto seed = static_cast<unsigned long>(rd()) ^ static_cast<unsigned long>(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+    std::mt19937 rng(seed);
+    std::uniform_real_distribution<double> dist(0.0, 1.0);
+	newStrat[x%100][x/100].epsilon = dist(rng);
+	return 0.0;
 }
 
 void Agent::updateQ(int k) // 

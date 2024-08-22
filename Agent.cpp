@@ -1,10 +1,12 @@
 #include "Agent.hpp"
+#include <vector>
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 
-double strategy[52][10]{
+int strategy[52][10]{
  // 2  3  4  5  6  7  8  9  10 A
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // Val 5
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // Val 6
@@ -60,6 +62,62 @@ double strategy[52][10]{
 	2, 2, 2, 2, 2, 2, 2, 2, 2, 2  // 21 > 2 cards
 };
 
+int moves[52][10][3] {
+	// 2  3  4  5  6  7  8  9  10 A
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}},						// Val 5
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 6
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 7
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 8
+	{{1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}}, // Val 9
+	{{1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}},// Val 10
+	{{1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}, {1,2,4}}, // Val 11
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 12
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}},		 				// Val 13
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 14
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 15
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 16
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}},					 	// 17
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// 18
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// 19
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// 20
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// 21
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // Pairs-A
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // A + 2
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // A + 3
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // A + 4
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // A + 5
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // A + 6
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // A + 7
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // A + 8
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // A + 9
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // A + 10
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // Pairs of 2
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // P-3
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // P-4
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // P-5
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // P-6
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // P-7
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // P-8
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // P-9
+	{{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}}, // P-10
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 6 >2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 7 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 8 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 9 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 10 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 11 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 12 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}},						// Val 13 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 14 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 15 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// Val 16  > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// 17 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// 18 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// 19 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}}, 					// 20 > 2 cards
+	{{1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1,2}, {1, 2}}  					// 21 > 2 cards
+};
+
 Agent::Agent() : 
 	agentValue(0),
 	agentWins(0),
@@ -87,11 +145,13 @@ void Agent::loadStrat()
 			{
 				StateInfo stateInfo;
 				stateInfo.name = j + 2;
-				stateInfo.numActions = 4;
+				for (int q = 0; q < 3; q++)
+				{
+				stateInfo.numActions[q] = moves[i][j][q];
+				}
 				stateInfo.numVisits = 0;
 				stateInfo.cardAction = strategy[i][j];
 				stateInfo.learnedStrat = 0;
-				stateInfo.epsilon = 0.0;
 				stratRow[j] = stateInfo;
 			}
 			newStrat[i] = stratRow;
@@ -107,7 +167,7 @@ void Agent::loadStrat()
 			std::vector<StateInfo> row;
 			std::istringstream iss(line);
 			StateInfo element;
-			while (iss >> element.name >> element.numActions >> element.numVisits >> element.cardAction >> element.learnedStrat >> element. epsilon >> element.Qvec[0] >> element.Qvec[1] >> element.Qvec[2] >> element.Qvec[3])
+			while (iss >> element.name >> element.numActions[0] >> element.numActions[1]  >> element.numActions[2] >> element.numVisits >> element.cardAction >> element.learnedStrat >> element.Qvec[0] >> element.Qvec[1] >> element.Qvec[2] >> element.Qvec[3])
 			{
 				row.push_back(element);
 				// ignore the delimiter between structs (3 spaces)
@@ -128,11 +188,13 @@ void Agent::printStrat()
 		{
 			printf("%d: ", i);
 			printf("%d,", newStrat[i][j].name);
-			printf("%d,", newStrat[i][j].numActions);
+			for (int q = 0; q < 3; q++)
+			{
+			printf("%d,", newStrat[i][j].numActions[q]);
+			}
 			printf("%d,", newStrat[i][j].numVisits);
 			printf("%d,", newStrat[i][j].cardAction);
 			printf("%d,", newStrat[i][j].learnedStrat);
-			printf("%f,", newStrat[i][j].epsilon);
 			printf("%f,", newStrat[i][j].Qvec[0]);
 			printf("%f,", newStrat[i][j].Qvec[1]);
 			printf("%f,", newStrat[i][j].Qvec[2]);
@@ -166,7 +228,7 @@ void Agent::writeStrat()
 	{
 		for (const auto &element : *it)
 		{
-			outFile << element.name << " " << element.numActions << " " << element.numVisits << " " << element.cardAction << " " << element.learnedStrat << " " << element.epsilon << " " << element.Qvec[0] << " " << element.Qvec[1] << " " << element.Qvec[2] << " " << element.Qvec[3];
+			outFile << element.name << " " << element.numActions[0] << " " << element.numActions[1] << " " << element.numActions[2] << " " << element.numVisits << " " << element.cardAction << " " << element.learnedStrat << " " << element.Qvec[0] << " " << element.Qvec[1] << " " << element.Qvec[2] << " " << element.Qvec[3];
 			outFile << " ";
 		}
 		outFile << std::endl;
@@ -179,9 +241,8 @@ double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
     printf("Agent(AI) Hand %d: AI is choosing...", handID + 1);
     int i = getChoice(cardDeck, dealer, handID);
 	///handHistory.push_back(i);
-    int action = strategy[i%100][i/100]; // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
-    updateVisits(i%100, i/100);
-	getEpsilon(i);
+    int action = getEpsilon(i); // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
+	updateVisits(i%100, i/100); //getEpsilon(i);
 	choiceHistory.push_back(action);
     std::cout << "AI chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", AI has a value of " << getValue(handID) << std::endl;
     switch(action)
@@ -230,15 +291,15 @@ double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
         else
         {
 			choiceHistory.pop_back();
-            std::cout << "Error: No matching cards; Unable to split. " << std::endl;
+            std::cout << "Error: No matching cards; Unable to split; Choosing a random action. " << std::endl;
             std::cout << std::endl;
             cardDeck.displayHand("AI", agentHands, 0);
             std::cout << std::endl;
-            return 0;
-            break; /// REMOVE WHEN FIXED
+			return 0;
+            break;
         }
         std::cout << "--------------------------" << std::endl << std::endl;
-        break;
+		break;
     }
     case 4:
     {
@@ -357,14 +418,38 @@ void Agent::clearHand()
 	choiceHistory.resize(0);
 }
 
-double Agent::getEpsilon(int x)
+int Agent::getEpsilon(int x)
 {
 	std::random_device rd;
     auto seed = static_cast<unsigned long>(rd()) ^ static_cast<unsigned long>(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-    std::mt19937 rng(seed);
-    std::uniform_real_distribution<double> dist(0.0, 1.0);
-	newStrat[x%100][x/100].epsilon = dist(rng);
-	return 0.0;
+	std::mt19937 rng(seed);
+	std::uniform_real_distribution<double> dist(0.0, 1.0);
+	double y = dist(rng);
+	if (y < newStrat[x%100][x/100].epsilon)
+	{
+		printf("%f", y);
+		std::vector<int> numbers(3);
+		for (int i = 0; i < 3; i++) 
+		{
+			numbers[i] = newStrat[x%100][x/100].numActions[i];
+		}
+		///numbers.erase(std::remove(numbers.begin(), numbers.end(), newStrat[x%100][x/100].cardAction), numbers.end());
+		std::random_device rand;
+		std::mt19937 eng(rand());
+		std::uniform_int_distribution<int> dist(0, 2);
+		int random_index = dist(eng);
+		int j = numbers[random_index];
+		if (j == 0)
+		{
+			std::uniform_int_distribution<int> distr(0, 1);
+			int random_index = distr(eng);
+			return numbers[random_index];
+		} else
+			return numbers[random_index];
+	} else {
+		return newStrat[x%100][x/100].cardAction;
+	}
+	///newStrat[x%100][x/100].epsilon = dist(rng);
 }
 
 void Agent::updateQ(int k) // 

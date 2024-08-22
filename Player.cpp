@@ -171,6 +171,8 @@ double Player::takeTurn(CardDeck &cardDeck, int handID)
         {
             std::cout << "Unable to complete action, not enough money in wallet. Wallet is now " << getPlayerWallet() << std::endl << std::endl;
 
+        } else if ((getNumCards(handID) > 2) && (8 < getValue(handID) < 12)) {
+            std::cout << "Error, too many cards; You may only double down on your first turn and if your card value is between 9 and 11." << std::endl;
         } else {
         std::cout << "Player Doubled Down. Bet is now " << betDown(handID) << ". Wallet is now " << Player::getPlayerWallet() << std::endl;
         setPlayFlag(0);

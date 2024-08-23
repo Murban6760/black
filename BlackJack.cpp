@@ -51,7 +51,7 @@ int main()
 	//agent.printStrat();
 
 
-	while ((round < 100000) && cardDeck.getDeckCardCount() > 12)
+	while ((round < 10000000) && cardDeck.getDeckCardCount() > 12)
 	{
 		std::vector<int> hand;
 		strategy.insertHand(hand);
@@ -128,7 +128,7 @@ int main()
 				agent.setPlayFlag(1);
 				while (agent.getPlayFlag() == 1 && agent.getValue(j) < 21)
 				{
-					agent.takeTurn(cardDeck, dealer, j);
+					agent.takeTurn(cardDeck, dealer, j, round);
 				}
 			}
 			///cout << endl

@@ -1,4 +1,5 @@
 #include "Agent.hpp"
+#include <cmath>
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -239,12 +240,12 @@ void Agent::writeStrat()
 	outFile.close();
 }
 
-double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
+double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID, int rounds)
 {
     //printf("Agent(AI) Hand %d: AI is choosing...", handID + 1);
     int i = getChoice(cardDeck, dealer, handID);
 	///handHistory.push_back(i);
-    int action = getEpsilon(i); // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
+    int action = getEpsilon(i, rounds); // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
 	updateVisits(i%100, i/100, action-1); //getEpsilon(i);
 	choiceHistory.push_back(action);
     //std::cout << "AI chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", AI has a value of " << getValue(handID) << std::endl;
@@ -418,8 +419,9 @@ void Agent::clearHand()
 	choiceHistory.resize(0);
 }
 
-int Agent::getEpsilon(int x)
+int Agent::getEpsilon(int x, int rounds)
 {
+	newStrat[x%100][x/100].epsilon = .5*exp(-rounds)/200000;
 	std::random_device rd;
     auto seed = static_cast<unsigned long>(rd()) ^ static_cast<unsigned long>(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 	std::mt19937 rng(seed);

@@ -40,7 +40,7 @@ public:
     void displayHand(CardDeck &cardDeck, int handID);
     void getCard(int handID, Dealer &dealer, CardDeck &cardDeck);
     void clearHand();
-    double takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID);
+    double takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID, int rounds);
     void clearValues();
 
     int getChoice(CardDeck &cardDeck, Dealer &dealer, int handID);
@@ -51,7 +51,7 @@ public:
     void setPlayFlag(int flagValue);
     int getPlayFlag();
 
-    int getEpsilon(int x);
+    int getEpsilon(int x, int rounds);
     int qChoice(int x);
 
     void loss();

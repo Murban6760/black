@@ -20,6 +20,7 @@
 #include "Agent.hpp"
 #include "Strategy.hpp"
 
+#define PRINT(x) ((void)0) ///switch with printf(x) to show print statements
 
 using namespace std;
 
@@ -27,7 +28,7 @@ int main()
 {
 
 
-	cout << endl << "Good Luck Players..." << endl << endl;
+	///cout << endl << "Good Luck Players..." << endl << endl;
 
 	int iMax = 52;
 
@@ -50,7 +51,7 @@ int main()
 	//agent.printStrat();
 
 
-	while ((round < 1000) && cardDeck.getDeckCardCount() > 12)
+	while ((round < 100000) && cardDeck.getDeckCardCount() > 12)
 	{
 		std::vector<int> hand;
 		strategy.insertHand(hand);
@@ -64,7 +65,7 @@ int main()
 		dealer.getCard(cardDeck);
 
 
-		cout << "----------------------------------------------------------" << endl << endl;
+		///cout << "----------------------------------------------------------" << endl << endl;
 
 		strategy.getCard(0, cardDeck);
 		dealer.getCard(cardDeck);
@@ -108,8 +109,8 @@ int main()
 					strategy.takeTurn(cardDeck, dealer, j);
 				}
 			}
-			cout << endl
-				 << endl;
+			///cout << endl
+				/// << endl;
 		}
 
 		//displaying Strategy hands
@@ -130,8 +131,8 @@ int main()
 					agent.takeTurn(cardDeck, dealer, j);
 				}
 			}
-			cout << endl
-				 << endl;
+			///cout << endl
+				/// << endl;
 		}
 
 		//displaying Agent hands
@@ -142,9 +143,9 @@ int main()
 		}
 		/// Turns ^
 
-		cout << "----------------------------------------------------------" << endl << endl;
+		///cout << "----------------------------------------------------------" << endl << endl;
 
-		cout << endl;
+		///cout << endl;
 
 		dealer.takeTurn(cardDeck);
 		/*for (int j = 0; j < player.getNumHands(); j++){
@@ -156,12 +157,12 @@ int main()
 		for (int j = 0; j < agent.getNumHands(); j++){
 			agentWins += summarizeAgent(dealer, agent, j);
 		}
-		///cout << "Player Score: " << playerWins << " // " << "Player Wallet: "<< player.getPlayerWallet() << endl;
-		cout << "Strategy Score: " << strategyWins << " // " << endl;
-		cout << "AI Score: " << agentWins << " // " << endl;
-		cout << "No. of Cards Used: " <<  cardDeck.getCardCount() << " Remaining Cards: " << cardDeck.getDeckCardCount() << endl << endl;
+		//////cout << "Player Score: " << playerWins << " // " << "Player Wallet: "<< player.getPlayerWallet() << endl;
+		///cout << "Strategy Score: " << strategyWins << " // " << endl;
+		///cout << "AI Score: " << agentWins << " // " << endl;
+		///cout << "No. of Cards Used: " <<  cardDeck.getCardCount() << " Remaining Cards: " << cardDeck.getDeckCardCount() << endl << endl;
 		
-		cout << "----------------------------------------------------------" << endl << endl;
+		///cout << "----------------------------------------------------------" << endl << endl;
 
 			dealer.clearHand();
 			strategy.clearHand();
@@ -169,9 +170,9 @@ int main()
 			agent.clearValues();
 			agent.clearHand();
 			cardDeck.setInverseCount();
-		cout << "----------------------------------------------------------" << endl << endl;
+		///cout << "----------------------------------------------------------" << endl << endl;
 
-		std::cout << std::endl;
+		///cout << std::endl;
 		if (cardDeck.getDeckCardCount() <= 12)
 		{
 			cardDeck.shuffleDeck();
@@ -179,6 +180,9 @@ int main()
 	}
 	
 	agent.writeStrat();
+	cout << "Strategy Score: " << strategyWins << " // " << endl;
+	cout << "AI Score: " << agentWins << " // " << endl;
+	cout << "No. of Cards Used: " <<  cardDeck.getCardCount() << " Remaining Cards: " << cardDeck.getDeckCardCount() << endl << endl;
 	printf("After %d rounds, the program is over.\n", round);
 	printf("Program over \n");
 	return 0;

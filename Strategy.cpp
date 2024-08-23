@@ -125,12 +125,12 @@ void Strategy::getCard(int handID, CardDeck &cardDeck)
 
 double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
 {
-    printf("Strategy Player(SP) Hand %d: SP is choosing...", handID + 1);
+    //printf("Strategy Player(SP) Hand %d: SP is choosing...", handID + 1);
     //int i = getChoice(cardDeck, dealer, handID)%100;
     //int j = getChoice(cardDeck, dealer, handID)/100;
     int action = strategy[getChoice(cardDeck, dealer, handID)%100][getChoice(cardDeck, dealer, handID)/100]; // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
     ///agent.updateVisits(i, j);
-    std::cout << "SP chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", SP has a value of " << getValue(handID) << std::endl;
+    //std::cout << "SP chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", SP has a value of " << getValue(handID) << std::endl;
     switch(action)
     {
     case 1:
@@ -138,7 +138,7 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
 
         if (getValue(handID) >= 22)
         {
-            printf("SP Busted! \n \n");
+            //printf("SP Busted! \n \n");
             
             return 0;
         }
@@ -177,14 +177,14 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
         }
         else
         {
-            std::cout << "Error: No matching cards; Unable to split. " << std::endl;
-            std::cout << std::endl;
+            //std::cout << "Error: No matching cards; Unable to split. " << std::endl;
+            //std::cout << std::endl;
             cardDeck.displayHand("SP", stratHands, 0);
-            std::cout << std::endl;
+            //std::cout << std::endl;
             return 0;
             break; /// REMOVE WHEN FIXED
         }
-        std::cout << "--------------------------" << std::endl << std::endl;
+        //std::cout << "--------------------------" << std::endl << std::endl;
         break;
     }
     case 4:
@@ -196,7 +196,7 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
     }
     default:
     {
-    std::cout << "SP has made an error, or something has gone wrong..." << std::endl;
+    //std::cout << "SP has made an error, or something has gone wrong..." << std::endl;
     return 1;
     break;
     }

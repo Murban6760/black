@@ -33,7 +33,7 @@ void Dealer::takeTurn(CardDeck &cardDeck)
 
 			if (getValue() > 21)
 			{
-				std::cout << "Dealer busted!" << std::endl;
+				//std::cout << "Dealer busted!" << std::endl;
 			}
 		}
 }

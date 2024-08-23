@@ -149,25 +149,25 @@ void CardDeck::setInverseCount()
 
 void CardDeck::displayHand(std::string name, std::vector<int> &hand, int offset, int display2)
 {
-	std::cout << name << ": ";
+	//std::cout << name << ": ";
 
 	for (int j = 0; j < hand.size() - offset; j++) {
-		std::cout << cardDeck[hand[j]].name << " ";
+		//std::cout << cardDeck[hand[j]].name << " ";
 	}
 
-	std::cout << std::endl << std::endl;
+	//std::cout << std::endl << std::endl;
 }
 
 void CardDeck::displayHand(std::string name, std::vector<std::vector<int>> &hand, int handID)
 {
 	std::vector<int> x = hand[handID];
-	std::cout << name << " Hand " << handID + 1 << ": ";
+	//std::cout << name << " Hand " << handID + 1 << ": ";
 
 	for (int j = 0; j < x.size(); j++) {
-		std::cout << cardDeck[x[j]].name << " ";
+		//std::cout << cardDeck[x[j]].name << " ";
 	}
 
-	std::cout << std::endl << std::endl;
+	//std::cout << std::endl << std::endl;
 }
 
 int CardDeck::computePlayerValue(std::vector<int> &hand)

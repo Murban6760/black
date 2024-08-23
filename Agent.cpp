@@ -241,13 +241,13 @@ void Agent::writeStrat()
 
 double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
 {
-    printf("Agent(AI) Hand %d: AI is choosing...", handID + 1);
+    //printf("Agent(AI) Hand %d: AI is choosing...", handID + 1);
     int i = getChoice(cardDeck, dealer, handID);
 	///handHistory.push_back(i);
     int action = getEpsilon(i); // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
 	updateVisits(i%100, i/100, action-1); //getEpsilon(i);
 	choiceHistory.push_back(action);
-    std::cout << "AI chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", AI has a value of " << getValue(handID) << std::endl;
+    //std::cout << "AI chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", AI has a value of " << getValue(handID) << std::endl;
     switch(action)
     {
     case 1:
@@ -255,7 +255,7 @@ double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
         if (getValue(handID) > 21)
         {
 			///handHistory.push_back(i);
-            printf("AI Busted! \n \n");
+            //printf("AI Busted! \n \n");
             return 0;
         } else if(getValue(handID) == 21) {
 			choiceHistory.push_back(2);
@@ -296,14 +296,14 @@ double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
         else
         {
 			choiceHistory.pop_back();
-            std::cout << "Error: No matching cards; Unable to split; Choosing a random action. " << std::endl;
-            std::cout << std::endl;
+            //std::cout << "Error: No matching cards; Unable to split; Choosing a random action. " << std::endl;
+            //std::cout << std::endl;
             cardDeck.displayHand("AI", agentHands, 0);
-            std::cout << std::endl;
+            //std::cout << std::endl;
 			return 0;
             break;
         }
-        std::cout << "--------------------------" << std::endl << std::endl;
+        //std::cout << "--------------------------" << std::endl << std::endl;
 		break;
     }
     case 4:
@@ -317,7 +317,7 @@ double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
     default:
     {
 	choiceHistory.pop_back();
-    std::cout << "AI has made an error, or something has gone wrong..." << std::endl;
+    //std::cout << "AI has made an error, or something has gone wrong..." << std::endl;
     return 1;
     break;
     }
@@ -469,10 +469,10 @@ void Agent::updateQ(int k) //
 {
 	for (int q = 0; q < handHistory.size(); q++)
 	{
-		printf("%d, ", handHistory[q]);
-		printf("%d, ", choiceHistory[q]);
-		printf("%f", newStrat[handHistory[q]%100][handHistory[q]/100].Qvec[choiceHistory[q]-1] += k);
-		printf("\n");
+		//printf("%d, ", handHistory[q]);
+		//printf("%d, ", choiceHistory[q]);
+		//printf("%f", newStrat[handHistory[q]%100][handHistory[q]/100].Qvec[choiceHistory[q]-1] += k);
+		//printf("\n");
 	}
 	
 }

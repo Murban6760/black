@@ -43,7 +43,7 @@ public:
 
 	int computePlayerValue(std::vector<int> &hand);
 	int computeDealerValue(std::vector<int> &hand);
-
+	void redoNums();
 	int getCard();
 	int getDealerCard();
 	int getStratCard();

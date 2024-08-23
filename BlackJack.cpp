@@ -16,7 +16,6 @@
 
 #include "BlackJackGame.hpp"
 #include "CardDeck.hpp"
-#include "Player.hpp"
 #include "Dealer.hpp"
 #include "Agent.hpp"
 #include "Strategy.hpp"
@@ -40,13 +39,6 @@ int main()
 	int card;
 	int round = 0;
 
-	/// Initialize Player and dealer
-
-	Player player;
-	int playerWins = 0;
-
-	double bet;
-
 	Strategy strategy;
 	int strategyWins = 0;
 
@@ -57,51 +49,37 @@ int main()
 	agent.loadStrat();
 	//agent.printStrat();
 
-	bool playerContFlag = true;
 
-	while (playerContFlag && cardDeck.getDeckCardCount() > 12)
+	while ((round < 1000) && cardDeck.getDeckCardCount() > 12)
 	{
 		std::vector<int> hand;
-		player.insertHand(hand);
-		player.insertValue(0);
-		player.insertBet(0);
-
+		strategy.insertHand(hand);
 		round++;
 
-		player.setPlayFlag(1);
 		strategy.setPlayFlag(1);
 		agent.setPlayFlag(1);
 		dealer.setFlag(1);
 
-		if (player.initBet(0) <= 0){
-			cout << "You ran out of money!" << endl;
-			break;
-		} else {
-			bet = player.placeBet(0);
-		}
-
-		player.getCard(0, cardDeck);
+		strategy.getCard(0, cardDeck);
 		dealer.getCard(cardDeck);
 
 
 		cout << "----------------------------------------------------------" << endl << endl;
 
-		player.getCard(0, cardDeck);
+		strategy.getCard(0, cardDeck);
 		dealer.getCard(cardDeck);
-		strategy.setHand(0, player, cardDeck);
-		agent.setHand(0, player, dealer, cardDeck);
+		agent.setHand(0, strategy, dealer, cardDeck);
 
 
-		int playerFlag = 1;
 		int dealerFlag = 1;
 		int strategyFlag = 1;
 		int agentFlag = 1;
 
-		checkWin(dealerFlag, playerFlag, player, dealer, 0);
+		///checkWin(dealerFlag, playerFlag, player, dealer, 0);
 		checkStrat(dealer, strategy, strategyFlag, dealerFlag, 0);
 		checkAgent(dealer, agent, agentFlag, dealerFlag, 0);
 
-		/// Player Actions
+		/* Player Actions
 		if (dealer.getFlag() == 1 && playerFlag == 1)
 		{
 			for (int j = 0; j < player.getNumHands(); j++)
@@ -118,8 +96,8 @@ int main()
 			}
 			cout << endl
 				 << endl;
-		}
-		// Summarizing for Agent win
+		} */
+		// Summarizing for Strategy win
 		if (dealer.getFlag() == 1 && strategyFlag == 1)
 		{
 			for (int j = 0; j < strategy.getNumHands(); j++)
@@ -169,51 +147,39 @@ int main()
 		cout << endl;
 
 		dealer.takeTurn(cardDeck);
-		for (int j = 0; j < player.getNumHands(); j++){
+		/*for (int j = 0; j < player.getNumHands(); j++){
 			playerWins += summarizeResults(dealer, player, j);
-		}
+		} */
 		for (int j = 0; j < strategy.getNumHands(); j++){
 			strategyWins += summarizeStrategy(dealer, strategy, j);
 		}
 		for (int j = 0; j < agent.getNumHands(); j++){
 			agentWins += summarizeAgent(dealer, agent, j);
 		}
-		cout << "Player Score: " << playerWins << " // " << "Player Wallet: "<< player.getPlayerWallet() << endl;
+		///cout << "Player Score: " << playerWins << " // " << "Player Wallet: "<< player.getPlayerWallet() << endl;
 		cout << "Strategy Score: " << strategyWins << " // " << endl;
 		cout << "AI Score: " << agentWins << " // " << endl;
 		cout << "No. of Cards Used: " <<  cardDeck.getCardCount() << " Remaining Cards: " << cardDeck.getDeckCardCount() << endl << endl;
 		
 		cout << "----------------------------------------------------------" << endl << endl;
 
-		int playerContInput;
-		printf("Player Continue: (1) Yes, (2) No: ");
-		fflush(stdout);
-		scanf("%d", &playerContInput);
-
-		if (playerContInput == 1)
-		{
-			playerContFlag = true;
-			player.clearHand();
 			dealer.clearHand();
 			strategy.clearHand();
-			player.clearValues();
 			strategy.clearValues();
 			agent.clearValues();
 			agent.clearHand();
 			cardDeck.setInverseCount();
-		}
-		else 
-		{
-			playerContFlag = false;
-		}
-		
 		cout << "----------------------------------------------------------" << endl << endl;
 
 		std::cout << std::endl;
-		player.betClear();
+		if (cardDeck.getDeckCardCount() <= 12)
+		{
+			cardDeck.shuffleDeck();
+		}
 	}
 	
 	agent.writeStrat();
+	printf("After %d rounds, the program is over.\n", round);
 	printf("Program over \n");
 	return 0;
 }

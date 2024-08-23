@@ -4,7 +4,7 @@ project(BlackJack VERSION 0.1.0 LANGUAGES C CXX)
 include(CTest)
 enable_testing()
 
-add_executable(BlackJack BlackJack.cpp CardDeck.cpp Dealer.cpp Agent.cpp Strategy.cpp Player.cpp )
+add_executable(BlackJack BlackJack.cpp CardDeck.cpp Dealer.cpp Agent.cpp Strategy.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

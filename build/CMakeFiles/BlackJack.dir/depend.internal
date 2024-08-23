@@ -6,14 +6,13 @@ CMakeFiles/BlackJack.dir/Agent.cpp.o
  /workspaces/black/Agent.hpp
  /workspaces/black/CardDeck.hpp
  /workspaces/black/Dealer.hpp
- /workspaces/black/Player.hpp
+ /workspaces/black/Strategy.hpp
 CMakeFiles/BlackJack.dir/BlackJack.cpp.o
  /workspaces/black/Agent.hpp
  /workspaces/black/BlackJack.cpp
  /workspaces/black/BlackJackGame.hpp
  /workspaces/black/CardDeck.hpp
  /workspaces/black/Dealer.hpp
- /workspaces/black/Player.hpp
  /workspaces/black/Strategy.hpp
 CMakeFiles/BlackJack.dir/CardDeck.cpp.o
  /workspaces/black/CardDeck.cpp
@@ -22,13 +21,8 @@ CMakeFiles/BlackJack.dir/Dealer.cpp.o
  /workspaces/black/CardDeck.hpp
  /workspaces/black/Dealer.cpp
  /workspaces/black/Dealer.hpp
-CMakeFiles/BlackJack.dir/Player.cpp.o
- /workspaces/black/CardDeck.hpp
- /workspaces/black/Player.cpp
- /workspaces/black/Player.hpp
 CMakeFiles/BlackJack.dir/Strategy.cpp.o
  /workspaces/black/CardDeck.hpp
  /workspaces/black/Dealer.hpp
- /workspaces/black/Player.hpp
  /workspaces/black/Strategy.cpp
  /workspaces/black/Strategy.hpp

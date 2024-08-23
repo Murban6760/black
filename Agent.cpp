@@ -5,7 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-
+/* Previous implementation that grabbed the determined strategy from a sheet
 int strategy[52][10]{
  // 2  3  4  5  6  7  8  9  10 A
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // Val 5
@@ -60,7 +60,7 @@ int strategy[52][10]{
 	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, // 19 > 2 cards
 	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, // 20 > 2 cards
 	2, 2, 2, 2, 2, 2, 2, 2, 2, 2  // 21 > 2 cards
-};
+}; */
 
 int moves[52][10][3] {
 	// 2  3  4  5  6  7  8  9  10 A
@@ -149,8 +149,11 @@ void Agent::loadStrat()
 				{
 				stateInfo.numActions[q] = moves[i][j][q];
 				}
-				stateInfo.numVisits = 0;
-				stateInfo.cardAction = strategy[i][j];
+				for (int q = 0; q < 3; q++)
+				{
+				stateInfo.numVisits[q] = 0;
+				}
+				stateInfo.cardAction = 1;
 				stateInfo.learnedStrat = 0;
 				stratRow[j] = stateInfo;
 			}
@@ -167,7 +170,7 @@ void Agent::loadStrat()
 			std::vector<StateInfo> row;
 			std::istringstream iss(line);
 			StateInfo element;
-			while (iss >> element.name >> element.numActions[0] >> element.numActions[1]  >> element.numActions[2] >> element.numVisits >> element.cardAction >> element.learnedStrat >> element.Qvec[0] >> element.Qvec[1] >> element.Qvec[2] >> element.Qvec[3])
+			while (iss >> element.name >> element.numActions[0] >> element.numActions[1]  >> element.numActions[2] >> element.numVisits[0] >> element.numVisits[1] >> element.numVisits[2] >> element.numVisits[3] >> element.cardAction >> element.learnedStrat >> element.Qvec[0] >> element.Qvec[1] >> element.Qvec[2] >> element.Qvec[3])
 			{
 				row.push_back(element);
 				// ignore the delimiter between structs (3 spaces)
@@ -206,12 +209,12 @@ void Agent::printStrat()
 
 void Agent::printElement(int i, int j)
 {
-	printf("%d,", newStrat[i][j].numVisits);
+	printf("%d,", newStrat[i][j].numVisits[0]);
 }
 
-void Agent::updateVisits(int i, int j)
+void Agent::updateVisits(int i, int j, int n)
 {
-	newStrat[i][j].numVisits += 1;
+	newStrat[i][j].numVisits[n] += 1;
 }
 
 void Agent::writeStrat()
@@ -228,7 +231,7 @@ void Agent::writeStrat()
 	{
 		for (const auto &element : *it)
 		{
-			outFile << element.name << " " << element.numActions[0] << " " << element.numActions[1] << " " << element.numActions[2] << " " << element.numVisits << " " << element.cardAction << " " << element.learnedStrat << " " << element.Qvec[0] << " " << element.Qvec[1] << " " << element.Qvec[2] << " " << element.Qvec[3];
+			outFile << element.name << " " << element.numActions[0] << " " << element.numActions[1] << " " << element.numActions[2] << " " << element.numVisits[0] << " " << element.numVisits[1] << " " << element.numVisits[2] << " " << element.numVisits[3] << " " << element.cardAction << " " << element.learnedStrat << " " << element.Qvec[0] << " " << element.Qvec[1] << " " << element.Qvec[2] << " " << element.Qvec[3];
 			outFile << " ";
 		}
 		outFile << std::endl;
@@ -242,7 +245,7 @@ double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
     int i = getChoice(cardDeck, dealer, handID);
 	///handHistory.push_back(i);
     int action = getEpsilon(i); // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
-	updateVisits(i%100, i/100); //getEpsilon(i);
+	updateVisits(i%100, i/100, action-1); //getEpsilon(i);
 	choiceHistory.push_back(action);
     std::cout << "AI chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", AI has a value of " << getValue(handID) << std::endl;
     switch(action)
@@ -254,8 +257,10 @@ double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
 			///handHistory.push_back(i);
             printf("AI Busted! \n \n");
             return 0;
-        }
-        else {
+        } else if(getValue(handID) == 21) {
+			choiceHistory.push_back(2);
+			return 1;
+		} else {
             return 1;
 			}
         break;
@@ -329,11 +334,11 @@ int Agent::getPlayFlag()
     return agentFlag;
 }
 
-void Agent::setHand(int handID, Player &player, Dealer &dealer, CardDeck &cardDeck)
+void Agent::setHand(int handID, Strategy &strategy, Dealer &dealer, CardDeck &cardDeck)
 {
-    for (int j = 0; j < player.getNumCards(handID); j++)
+    for (int j = 0; j < strategy.getNumCards(handID); j++)
     {
-        agentHands[handID].push_back(player.getHand(handID, j));
+        agentHands[handID].push_back(strategy.getHand(handID, j));
     }
 	agentValue = cardDeck.computePlayerValue(agentHands[handID]);
     agentValues[handID] = agentValue;
@@ -343,7 +348,7 @@ void Agent::setHand(int handID, Player &player, Dealer &dealer, CardDeck &cardDe
 
 void Agent::getCard(int handID, Dealer &dealer, CardDeck &cardDeck)
 {
-    int card = cardDeck.getAgentCard();
+    int card = cardDeck.getStratCard();
 	std::vector<int> x = agentHands[handID];
     x.push_back(card);
     agentValue = cardDeck.computePlayerValue(x);
@@ -360,11 +365,6 @@ int Agent::getValue(int handID)
 {
     return agentValues[handID];
 }
-/*
-int Agent::getNumHands() // might not need
-{
-    return stratHands.size();
-}*/
 
 void Agent::displayHand(CardDeck &cardDeck, int handID)
 {
@@ -382,7 +382,7 @@ int Agent::getNumHands()
 }
 
 
-int Agent::getChoice(CardDeck &cardDeck, Dealer &dealer,int handID) // Will be edited later to account for AI decisions
+int Agent::getChoice(CardDeck &cardDeck, Dealer &dealer,int handID) 
 {
     std::vector<int> hand = agentHands[handID];
     if (hand.size() > 2)
@@ -427,13 +427,12 @@ int Agent::getEpsilon(int x)
 	double y = dist(rng);
 	if (y < newStrat[x%100][x/100].epsilon)
 	{
-		printf("%f", y);
+		///printf("%f", y);
 		std::vector<int> numbers(3);
 		for (int i = 0; i < 3; i++) 
 		{
 			numbers[i] = newStrat[x%100][x/100].numActions[i];
 		}
-		///numbers.erase(std::remove(numbers.begin(), numbers.end(), newStrat[x%100][x/100].cardAction), numbers.end());
 		std::random_device rand;
 		std::mt19937 eng(rand());
 		std::uniform_int_distribution<int> dist(0, 2);
@@ -447,18 +446,29 @@ int Agent::getEpsilon(int x)
 		} else
 			return numbers[random_index];
 	} else {
+		return qChoice(x);
+	}
+}
+
+int Agent::qChoice(int x) 
+{
+	if (std::all_of(newStrat[x%100][x/100].Qvec, newStrat[x%100][x/100].Qvec + 4, [](int i) {return i = 0;})){
+	for (int j = 0; j < 4; j ++)
+	{
+		newStrat[x%100][x/100].Qvec[j] /= newStrat[x%100][x/100].numVisits[j];
+	}
+	auto it = std::max_element(newStrat[x%100][x/100].Qvec, newStrat[x%100][x/100].Qvec + sizeof(newStrat[x%100][x/100].Qvec));
+	newStrat[x%100][x/100].learnedStrat = std::distance(newStrat[x%100][x/100].Qvec, it);
+	return newStrat[x%100][x/100].learnedStrat;
+	} else {
 		return newStrat[x%100][x/100].cardAction;
 	}
-	///newStrat[x%100][x/100].epsilon = dist(rng);
 }
 
 void Agent::updateQ(int k) // 
 {
-	//printf("%d", handHistory.size());
-	//printf("%d", choiceHistory.size());
 	for (int q = 0; q < handHistory.size(); q++)
 	{
-		///newStrat[handHistory[q]%100][handHistory[q]/100].Qvec[choiceHistory[q]] += k/handHistory.size();
 		printf("%d, ", handHistory[q]);
 		printf("%d, ", choiceHistory[q]);
 		printf("%f", newStrat[handHistory[q]%100][handHistory[q]/100].Qvec[choiceHistory[q]-1] += k);

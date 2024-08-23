@@ -628,33 +628,6 @@ Dealer.cpp.s:
 	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Dealer.cpp.s
 .PHONY : Dealer.cpp.s
 
-Player.o: Player.cpp.o
-
-.PHONY : Player.o
-
-# target to build an object file
-Player.cpp.o:
-	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Player.cpp.o
-.PHONY : Player.cpp.o
-
-Player.i: Player.cpp.i
-
-.PHONY : Player.i
-
-# target to preprocess a source file
-Player.cpp.i:
-	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Player.cpp.i
-.PHONY : Player.cpp.i
-
-Player.s: Player.cpp.s
-
-.PHONY : Player.s
-
-# target to generate assembly for a file
-Player.cpp.s:
-	$(MAKE) -f CMakeFiles/BlackJack.dir/build.make CMakeFiles/BlackJack.dir/Player.cpp.s
-.PHONY : Player.cpp.s
-
 Strategy.o: Strategy.cpp.o
 
 .PHONY : Strategy.o
@@ -734,9 +707,6 @@ help:
 	@echo "... Dealer.o"
 	@echo "... Dealer.i"
 	@echo "... Dealer.s"
-	@echo "... Player.o"
-	@echo "... Player.i"
-	@echo "... Player.s"
 	@echo "... Strategy.o"
 	@echo "... Strategy.i"
 	@echo "... Strategy.s"

@@ -83,6 +83,22 @@ int Strategy::getPlayFlag()
     return stratFlag;
 }
 
+int Strategy::getHand(int handID, int index)
+{
+    return stratHands[handID][index];
+}
+
+void Strategy::insertHand(std::vector<int> &hand) 
+{
+    stratHands[0] = hand;
+}
+
+int Strategy::getNumCards(int handID)
+{
+    return stratHands[handID].size();
+}
+
+/*
 void Strategy::setHand(int handID, Player &player, CardDeck &cardDeck)
 {
     for (int j = 0; j < player.getNumCards(handID); j++)
@@ -94,11 +110,11 @@ void Strategy::setHand(int handID, Player &player, CardDeck &cardDeck)
     stratValues[handID] = stratValue;
     cardDeck.displayHand("SP", stratHands, handID);
 
-}
+}*/
 
 void Strategy::getCard(int handID, CardDeck &cardDeck)
 {
-    int card = cardDeck.getStratCard();
+    int card = cardDeck.getCard();
 	std::vector<int> x = stratHands[handID];
     x.push_back(card);
     stratValue = cardDeck.computePlayerValue(x);

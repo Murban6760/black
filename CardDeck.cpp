@@ -6,8 +6,7 @@
 CardDeck::CardDeck():
 	cardNum(52 * NUMDECKS),
 	cardCount(0),
-	inverseCount(0),
-	inverseCount2(0)
+	inverseCount(0)
 {
 	
 	cardDeck.push_back(Card {"A", "H", 11});
@@ -103,7 +102,9 @@ void CardDeck::shuffleDeck()
     	cardOrder[i] = cardOrder[j];
     	cardOrder[j] = temp;
 
-    }
+	}
+	cardCount = 0;
+	inverseCount = 0;
 }
 
 int CardDeck::getCard()
@@ -121,7 +122,6 @@ int CardDeck::getDealerCard()
     card = cardOrder[cardCount] % 52;
     cardCount++;
 	inverseCount++;
-	inverseCount2++;
 
     return card;
 }
@@ -134,13 +134,6 @@ int CardDeck::getStratCard()
 	return card;
 }
 
-int CardDeck::getAgentCard()
-{
-	int card;
-	card = cardOrder[inverseCount2] % 52;
-	inverseCount2++;
-	return card;
-}
 
 std::string CardDeck::getCardName(int card)
 {

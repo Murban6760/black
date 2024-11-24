@@ -52,7 +52,7 @@ int main()
 	//agent.printStrat();
 
 
-	while ((milRounds < 10) && cardDeck.getDeckCardCount() > 12)
+	while ((milRounds < 70) && cardDeck.getDeckCardCount() > 12)
 	{
 		std::vector<int> hand;
 		strategy.insertHand(hand);
@@ -180,13 +180,19 @@ int main()
 			cardDeck.shuffleDeck();
 		}
 		
+		if ((round%10000000 == 0) && (milRounds >= 10))
+		{
+			cout << "This is the " << milRounds << " million marker." << endl;
+			agent.writeStrat();
+		}
+		
+
 		if (round == 1000000)
 		{
 			milRounds++;
 			cout << "Round " << milRounds << " million of 10 million rounds completed.\n";
 			round = 0;
 		}
-		
 		///milRounds++;
 	}
 	

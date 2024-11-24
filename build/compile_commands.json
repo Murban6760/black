@@ -1,27 +1,27 @@
 [
 {
   "directory": "/workspaces/black/build",
-  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/BlackJack.cpp.o -c /workspaces/black/BlackJack.cpp",
+  "command": "/usr/bin/c++    -g   -o CMakeFiles/BlackJack.dir/BlackJack.cpp.o -c /workspaces/black/BlackJack.cpp",
   "file": "/workspaces/black/BlackJack.cpp"
 },
 {
   "directory": "/workspaces/black/build",
-  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/CardDeck.cpp.o -c /workspaces/black/CardDeck.cpp",
+  "command": "/usr/bin/c++    -g   -o CMakeFiles/BlackJack.dir/CardDeck.cpp.o -c /workspaces/black/CardDeck.cpp",
   "file": "/workspaces/black/CardDeck.cpp"
 },
 {
   "directory": "/workspaces/black/build",
-  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/Dealer.cpp.o -c /workspaces/black/Dealer.cpp",
+  "command": "/usr/bin/c++    -g   -o CMakeFiles/BlackJack.dir/Dealer.cpp.o -c /workspaces/black/Dealer.cpp",
   "file": "/workspaces/black/Dealer.cpp"
 },
 {
   "directory": "/workspaces/black/build",
-  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/Agent.cpp.o -c /workspaces/black/Agent.cpp",
+  "command": "/usr/bin/c++    -g   -o CMakeFiles/BlackJack.dir/Agent.cpp.o -c /workspaces/black/Agent.cpp",
   "file": "/workspaces/black/Agent.cpp"
 },
 {
   "directory": "/workspaces/black/build",
-  "command": "/usr/bin/g++    -g   -o CMakeFiles/BlackJack.dir/Strategy.cpp.o -c /workspaces/black/Strategy.cpp",
+  "command": "/usr/bin/c++    -g   -o CMakeFiles/BlackJack.dir/Strategy.cpp.o -c /workspaces/black/Strategy.cpp",
   "file": "/workspaces/black/Strategy.cpp"
 }
 ]

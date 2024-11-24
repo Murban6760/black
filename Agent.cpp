@@ -123,13 +123,17 @@ Agent::Agent() :
 	agentValue(0),
 	agentWins(0),
 	agentCount(1),
-	agentFlag(1)
+	agentFlag(1),
+	dist(0.0, 1.0)
 {
 	newStrat.clear();
 	agentHands.resize(1);
 	agentValues.resize(1);
 	handHistory.resize(0);
 	choiceHistory.resize(0);
+	std::random_device rd;
+    auto seed = static_cast<unsigned long>(rd()) ^ static_cast<unsigned long>(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+	std::mt19937 rng(seed);
 }
 
 void Agent::loadStrat()
@@ -137,7 +141,7 @@ void Agent::loadStrat()
 	std::ifstream inFile("../Policy.txt");
 	if (!inFile)
 	{
-		std::cerr << "Error reading File" << std::endl;
+		std::cerr << "Error reading File. Creating new file in its place." << std::endl;
 		newStrat.resize(52);
 		for (int i = 0; i < 52; i++)
 		{
@@ -422,10 +426,6 @@ void Agent::clearHand()
 int Agent::getEpsilon(int x, int rounds)
 {
 	newStrat[x%100][x/100].epsilon = .5*exp(-rounds)/200000;
-	std::random_device rd;
-    auto seed = static_cast<unsigned long>(rd()) ^ static_cast<unsigned long>(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-	std::mt19937 rng(seed);
-	std::uniform_real_distribution<double> dist(0.0, 1.0);
 	double y = dist(rng);
 	if (y < newStrat[x%100][x/100].epsilon)
 	{
@@ -434,16 +434,17 @@ int Agent::getEpsilon(int x, int rounds)
 		for (int i = 0; i < 3; i++) 
 		{
 			numbers[i] = newStrat[x%100][x/100].numActions[i];
+			///printf("%d", newStrat[x%100][x/100].numActions);
 		}
 		std::random_device rand;
 		std::mt19937 eng(rand());
 		std::uniform_int_distribution<int> dist(0, 2);
-		int random_index = dist(eng);
+		int random_index = dist(rng);
 		int j = numbers[random_index];
 		if (j == 0)
 		{
 			std::uniform_int_distribution<int> distr(0, 1);
-			int random_index = distr(eng);
+			int random_index = distr(rng);
 			return numbers[random_index];
 		} else
 			return numbers[random_index];

@@ -68,6 +68,8 @@ private:
     int agentValue;
     int agentWins;
     int agentFlag;
+    auto seed;
+    std::uniform_real_distribution<double> dist[2];
 };
 
 #endif /*AGENT_HPP_*/

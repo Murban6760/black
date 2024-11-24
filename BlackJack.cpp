@@ -174,26 +174,27 @@ int main()
 		///cout << "----------------------------------------------------------" << endl << endl;
 
 		///cout << std::endl;
+		
 		if (cardDeck.getDeckCardCount() <= 12)
 		{
 			cardDeck.shuffleDeck();
 		}
-		/*
+		
 		if (round == 1000000)
 		{
 			milRounds++;
 			cout << "Round " << milRounds << " million of 10 million rounds completed.\n";
 			round = 0;
 		}
-		*/
-		milRounds++;
+		
+		///milRounds++;
 	}
 	
 	agent.writeStrat();
 	cout << "Strategy Score: " << strategyWins << " // " << endl;
 	cout << "AI Score: " << agentWins << " // " << endl;
 	cout << "No. of Cards Used: " <<  cardDeck.getCardCount() << " Remaining Cards: " << cardDeck.getDeckCardCount() << endl << endl;
-	printf("After %d rounds, the program is over.\n", round);
+	printf("After %d million rounds, the program is over.\n", milRounds);
 	printf("Program over \n");
 	return 0;
 }

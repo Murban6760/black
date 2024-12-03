@@ -128,7 +128,8 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
     //printf("Strategy Player(SP) Hand %d: SP is choosing...", handID + 1);
     //int i = getChoice(cardDeck, dealer, handID)%100;
     //int j = getChoice(cardDeck, dealer, handID)/100;
-    int action = strategy[getChoice(cardDeck, dealer, handID)%100][getChoice(cardDeck, dealer, handID)/100]; // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
+    int x = getChoice(cardDeck, dealer, handID);//getChoice(cardDeck, dealer, handID)
+    int action = strategy[x%100][x/100]; // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
     ///agent.updateVisits(i, j);
     //std::cout << "SP chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", SP has a value of " << getValue(handID) << std::endl;
     switch(action)
@@ -196,7 +197,7 @@ double Strategy::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID)
     }
     default:
     {
-    //std::cout << "SP has made an error, or something has gone wrong..." << std::endl;
+    std::cout << "SP has made an error, or something has gone wrong..." << std::endl;
     return 1;
     break;
     }
@@ -232,7 +233,7 @@ int Strategy::getChoice(CardDeck &cardDeck, Dealer &dealer,int handID)
     if (hand.size() > 2)
     {
         int x = getValue(handID) + 30 + ((dealer.getFaceValue(cardDeck)-2)* 100);
-        return x;
+        return x; /// v The 
     } else if (cardDeck.getCardName(hand[0]) == "A" || cardDeck.getCardName(hand[1]) == "A") 
     {  
         if (cardDeck.getCardName(hand[0]) == cardDeck.getCardName(hand[1]))

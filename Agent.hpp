@@ -34,7 +34,7 @@ public:
     void printElement(int i, int j);
     void updateVisits(int i, int j, int n);
     void writeStrat();
-    void updateQ(int k);
+    void updateQ(int x, int k);
 
     void setHand(int handID, Strategy &strategy, Dealer &dealer, CardDeck &cardDeck);
     void displayHand(CardDeck &cardDeck, int handID);
@@ -47,10 +47,12 @@ public:
     int getDealerValue(Dealer &dealer);
     int getValue(int handID);
     int getNumHands();
+    int agCard();
 
     void setPlayFlag(int flagValue);
     int getPlayFlag();
 
+    int getQ();
     int getEpsilon(int x, int rounds);
     int qChoice(int x);
 
@@ -64,10 +66,12 @@ private:
     
     std::vector<std::vector<StateInfo>> newStrat;
 
+    int agentCard;
     int agentCount;
     int agentValue;
     int agentWins;
     int agentFlag;
+    int Q;
     unsigned long seed;
 };
 

@@ -123,7 +123,9 @@ Agent::Agent() :
 	agentValue(0),
 	agentWins(0),
 	agentCount(1),
-	agentFlag(1)///,
+	agentFlag(1),
+	Q(-1)
+	///,
 	///seed(static_cast<unsigned long>(rd()) ^ static_cast<unsigned long>(std::chrono::high_resolution_clock::now().time_since_epoch().count()))
 {
 	newStrat.clear();
@@ -197,7 +199,9 @@ void Agent::printStrat()
 			{
 			printf("%d,", newStrat[i][j].numActions[q]);
 			}
-			printf("%d,", newStrat[i][j].numVisits);
+			for (int q = 0; q < 4; q++){
+			printf("%d,", newStrat[i][j].numVisits[q]);
+			}
 			printf("%d,", newStrat[i][j].cardAction);
 			printf("%d,", newStrat[i][j].learnedStrat);
 			printf("%f,", newStrat[i][j].Qvec[0]);
@@ -212,11 +216,6 @@ void Agent::printStrat()
 void Agent::printElement(int i, int j)
 {
 	printf("%d,", newStrat[i][j].numVisits[0]);
-}
-
-void Agent::updateVisits(int i, int j, int n)
-{
-	newStrat[i][j].numVisits[n] += 1;
 }
 
 void Agent::writeStrat()
@@ -241,13 +240,20 @@ void Agent::writeStrat()
 	outFile.close();
 }
 
+int Agent::agCard()
+{
+	return agentCard;
+}
+
 double Agent::takeTurn(CardDeck &cardDeck, Dealer &dealer, int handID, int rounds)
 {
     //printf("Agent(AI) Hand %d: AI is choosing...", handID + 1);
-    int i = getChoice(cardDeck, dealer, handID);
+    agentCard = getChoice(cardDeck, dealer, handID);
 	///handHistory.push_back(i);
-    int action = getEpsilon(i, rounds); // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
-	updateVisits(i%100, i/100, action-1); //getEpsilon(i);
+    int action = getEpsilon(agentCard, rounds); // i = getChoice(cardDeck, dealer, handID)%100 | j =getChoice(cardDeck, dealer, handID)/100
+	//std::cout << action << "  action-1 " << action-1 << std::endl;
+	updateVisits(agentCard%100, agentCard/100, action-1); //
+	//std::cout << "Checkpoint TT1\n";
 	choiceHistory.push_back(action);
     //std::cout << "AI chooses " << action  << " " << getChoice(cardDeck, dealer, handID) << ", AI has a value of " << getValue(handID) << std::endl;
     switch(action)
@@ -442,27 +448,40 @@ int Agent::getEpsilon(int x, int rounds)
 		std::random_device rand;
 		std::mt19937 eng(rand());
 		std::uniform_int_distribution<int> dist(0, 2);
-		int random_index = dist(rng);
-		int j = numbers[random_index];
+		int randomr_index = dist(rng);
+		int j = numbers[randomr_index];
 		if (j == 0)
 		{
 			std::uniform_int_distribution<int> distr(0, 1);
 			int random_index = distr(rng);
+			//std::cout << "Checkpoint 2 " << random_index << "\n";
+			Q = random_index;
 			return numbers[random_index];
 		} else
-			return numbers[random_index];
+			Q = randomr_index;
+			//std::cout << "Checkpoint 3 " << randomr_index << "\n";
+			//std::cout << "Checkpoint 3.1, numbers[index] = " << numbers[randomr_index] << std::endl;
+			return numbers[randomr_index];
 	} else {
 		return qChoice(x);
 	}
 }
 
-int Agent::qChoice(int x) 
+void Agent::updateVisits(int i, int j, int n)
+{
+	//std::cout << "CheckpointUV1\n";
+	newStrat[i][j].numVisits[n] += 1;
+	//std::cout << "CheckpointUV2\n";
+}
+
+int Agent::qChoice(int x) // Below if statement almost never runs
 {
 	if (std::all_of(newStrat[x%100][x/100].Qvec, newStrat[x%100][x/100].Qvec + 4, [](int i) {return i = 0;})){
 	for (int j = 0; j < 4; j ++)
 	{
 		newStrat[x%100][x/100].Qvec[j] /= newStrat[x%100][x/100].numVisits[j];
 	}
+	//std::cout << "No errors here\n";
 	auto it = std::max_element(newStrat[x%100][x/100].Qvec, newStrat[x%100][x/100].Qvec + sizeof(newStrat[x%100][x/100].Qvec));
 	newStrat[x%100][x/100].learnedStrat = std::distance(newStrat[x%100][x/100].Qvec, it);
 	return newStrat[x%100][x/100].learnedStrat;
@@ -471,16 +490,18 @@ int Agent::qChoice(int x)
 	}
 }
 
-void Agent::updateQ(int k) // 
+int Agent::getQ()
 {
-	for (int q = 0; q < handHistory.size(); q++)
-	{
-		//printf("%d, ", handHistory[q]);
-		//printf("%d, ", choiceHistory[q]);
-		//printf("%f", newStrat[handHistory[q]%100][handHistory[q]/100].Qvec[choiceHistory[q]-1] += k);
-		//printf("\n");
-	}
-	
+	return Q;
+}
+
+void Agent::updateQ(int x, int k) // 
+{
+	//std::cout << "Checkpoint 1\n";
+	//std::cout << x << "  is x, and this is k > " << k << std::endl;
+	//std::cout << "This is the qvec slot " << newStrat[x%100][x/100].Qvec[k] << std::endl;
+	newStrat[x%100][x/100].Qvec[k]++;
+	//std::cout << "Checkpoint Q2\n";
 }
 
 

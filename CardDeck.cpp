@@ -107,6 +107,7 @@ void CardDeck::shuffleDeck()
 	inverseCount = 0;
 }
 
+
 int CardDeck::getCard()
 {
     int card;
@@ -115,6 +116,7 @@ int CardDeck::getCard()
 
     return card;
 }
+
 
 int CardDeck::getDealerCard()
 {
@@ -143,7 +145,6 @@ std::string CardDeck::getCardName(int card)
 void CardDeck::setInverseCount()
 {
 	inverseCount = cardCount + 2;
-	inverseCount2 = cardCount + 2;
 }
 
 

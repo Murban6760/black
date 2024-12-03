@@ -61,7 +61,6 @@ private:
 	int cardNum;
 	int cardCount;
 	int inverseCount;
-	int inverseCount2;
 
 	int cardOrder[52*NUMDECKS];
 

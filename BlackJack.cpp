@@ -40,6 +40,7 @@ int main()
 	int card;
 	int round = 0;
 	int milRounds = 0;
+	int numTens=0;
 
 	Strategy strategy;
 	int strategyWins = 0;
@@ -52,7 +53,7 @@ int main()
 	//agent.printStrat();
 
 
-	while ((milRounds < 70) && cardDeck.getDeckCardCount() > 12)
+	while ((milRounds < 100) && cardDeck.getDeckCardCount() > 30)
 	{
 		std::vector<int> hand;
 		strategy.insertHand(hand);
@@ -81,24 +82,6 @@ int main()
 		checkStrat(dealer, strategy, strategyFlag, dealerFlag, 0);
 		checkAgent(dealer, agent, agentFlag, dealerFlag, 0);
 
-		/* Player Actions
-		if (dealer.getFlag() == 1 && playerFlag == 1)
-		{
-			for (int j = 0; j < player.getNumHands(); j++)
-			{
-				player.setPlayFlag(1);
-				while (player.getPlayFlag() && player.getValue(j) < 21)
-				{
-					if (player.getNumHands() > 1){
-						player.displayHand(cardDeck, j);
-					}
-					int addBet = player.takeTurn(cardDeck, j);
-					bet += addBet;
-				}
-			}
-			cout << endl
-				 << endl;
-		} */
 		// Summarizing for Strategy win
 		if (dealer.getFlag() == 1 && strategyFlag == 1)
 		{
@@ -175,25 +158,24 @@ int main()
 
 		///cout << std::endl;
 		
-		if (cardDeck.getDeckCardCount() <= 12)
+		if (cardDeck.getDeckCardCount() <= 30)
 		{
 			cardDeck.shuffleDeck();
 		}
 		
-		if ((round%10000000 == 0) && (milRounds >= 10))
-		{
-			cout << "This is the " << milRounds << " million marker." << endl;
-			agent.writeStrat();
-		}
-		
-
 		if (round == 1000000)
 		{
 			milRounds++;
+			if (milRounds%10 == 0)
+			{
+				cout << "This is the " << milRounds << " million marker." << endl;
+				agent.writeStrat();
+			}
 			cout << "Round " << milRounds << " million of 10 million rounds completed.\n";
 			round = 0;
 		}
-		///milRounds++;
+		
+		//milRounds++;
 	}
 	
 	agent.writeStrat();

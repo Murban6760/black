@@ -157,13 +157,13 @@ int summarizeAgent (Dealer &dealer, Agent &agent, int handID)
 		if (agent.getValue(handID) > 21)
 		{
 			///std::cout << "AI busts..." << std::endl;
-			agent.updateQ(0);
 			return -1;
 		}
 		else
 		{
 			///std::cout << "AI wins, AI value: " << agent.getValue(handID) << std::endl;
-			agent.updateQ(1);
+			agent.updateQ(agent.agCard(), agent.getQ());
+			//std::cout << "Checkpoint B1\n";
 			return 1;
 		}
 	}
@@ -172,7 +172,6 @@ int summarizeAgent (Dealer &dealer, Agent &agent, int handID)
 		if (agent.getValue(handID) > 21)
 		{
 			///std::cout << "AI loses, AI value: " << agent.getValue(handID) << std::endl;
-			agent.updateQ(0);
 			return -1;
 		} 
 		else
@@ -184,13 +183,13 @@ int summarizeAgent (Dealer &dealer, Agent &agent, int handID)
 			else if (agent.getValue(handID) > dealer.getValue())
 			{
 				///std::cout << "AI wins, AI value: " << agent.getValue(handID) << std::endl;
-				agent.updateQ(1);	
+				agent.updateQ(agent.agCard(), agent.getQ());	
+				//std::cout << "Checkpoint B2\n";
 				return 1;
 			}
 			else
 			{
 				///std::cout << "AI loses, AI value: " << agent.getValue(handID) << std::endl;
-				agent.updateQ(0);
 				return -1;
 			}
 		}
